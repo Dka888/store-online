@@ -1,0 +1,29 @@
+@import '../../utils/utils.scss';
+
+
+.button {
+    text-transform: uppercase;
+    border: var(--main-grey) 1px solid;
+    border-radius: 10px;
+    padding: 4px 4px;
+    min-width: 15px;
+    color: var(--main-grey);
+    text-decoration: none;
+    font-size: 12px;
+
+    &:hover {
+        background-color: var(--main-grey);
+        color: var(--main-white);
+        cursor: pointer;
+    }
+}
+
+@media(min-width: 450px) {
+    .button {
+        text-transform: uppercase;
+        border-radius: 10px;
+        padding: 7px 10px;
+        min-width: 30px;
+        text-decoration: none;
+    }
+}

@@ -1,0 +1,56 @@
+@import '../../utils/utils.scss';
+
+
+.contact {
+    height: fit-content;
+    width: 30vw;
+    margin: 3rem auto;
+    border: 1px solid #333;
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+
+
+    &__title {
+        text-align: center;
+        margin: 1.5rem auto;
+    }
+
+    &__link {
+        text-decoration: none;
+        color: var(--text);
+    }
+
+    &__text--bold {
+        font-weight: 700;
+    }
+}
+
+
+.form {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    height: 20vh;
+    width: 20vw;
+    text-align: center;
+    padding-bottom: 4rem;
+
+    &__input {
+        width: 100%;
+        margin: 10px auto;
+    
+    }
+    
+    &__textarea {
+        width: 100%;
+        margin: 10px auto;
+    }
+    
+    &__button {
+        width: 70%;
+        margin: 10px auto;
+    }
+    
+}
+

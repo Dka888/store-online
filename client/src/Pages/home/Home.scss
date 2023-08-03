@@ -1,0 +1,39 @@
+@import '../../utils/utils.scss';
+
+:root {
+    box-sizing: border-box;
+}
+
+.container {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    line-height: 4rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: auto;
+}
+
+.carousel {
+    margin: 20px auto;
+    max-width: 100vw; 
+
+    &>h2 {
+        text-align: center;
+    }
+    
+    &__view {
+        display: flex;
+        gap: 10px;
+        overflow: hidden;
+
+        &:nth-child(n) {
+            overflow: hidden;
+        }
+    }
+}
+
+
+
