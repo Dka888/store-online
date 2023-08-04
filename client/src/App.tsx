@@ -28,7 +28,7 @@ function App() {
       <Route path='/categories/health' element={<ProductList category={Category.Health} />} />
       <Route path='/categories/sport' element={<ProductList category={Category.Sport} />} />
       <Route path='/categories/home' element={<ProductList category={Category.Home} />} />
-      <Route path='user/basket' element={<Basket />} />
+      <Route path='/basket' element={<Basket />} />
       <Route path='/about' element={<About />} />
       <Route path='*' element={<PageNotFound />} />
       <Route path='/contact' element={ <Contact />} />

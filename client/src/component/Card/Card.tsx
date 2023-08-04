@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import { Product } from '../../utils/Product';
-import './Card.scss';
 
+import axios from 'axios';
+import { products } from '../../api/api';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addToBasket } from '../../features/basketSlice';
+
+
+import './Card.scss';
 interface CardProps {
     product: Product;
 }
@@ -11,12 +17,28 @@ export const Card = ({product}: CardProps) => {
     const [counterClick, setCounterClick] = useState(0);
     const [sumStars, setSumStars] = useState(0);
 
-    const handleClickStars = (number: number) => {
+    const dispatch = useAppDispatch();
+
+    const handleClickStars = (number: number, id: string) => {
         setCounterClick(counterClick + 1);
         setSumStars(sumStars + number);
+        const rating = Math.round(sumStars / counterClick);
+        const productCard = products.find(product => product.id);
+
+        if (productCard) {
+            productCard.rating = rating; 
+            console.log(productCard.rating);
+        }
+        // axios.patch(`http://localhost:3333/products/${id}`, {rating, })
     }
 
-    console.log(sumStars, counterClick)
+    const handletoAdd = () => {
+        dispatch(addToBasket(product));
+    }
+
+    const item = useAppSelector(state => state.basket.items);
+
+    console.log(item);
 
     return (
         <div className="card">
@@ -31,12 +53,12 @@ export const Card = ({product}: CardProps) => {
                 <div className="card_code">Product code: 195434</div>
 
                 <div className="card_rew">
-                    <div className="stars stars--4">
-                        <div className="stars__star" onClick={() => handleClickStars(1)}></div>
-                        <div className="stars__star" onClick={() => handleClickStars(2)}></div>
-                        <div className="stars__star" onClick={() => handleClickStars(3)}></div>
-                        <div className="stars__star" onClick={() => handleClickStars(4)}></div>
-                        <div className="stars__star" onClick={() => handleClickStars(5)}></div>
+                    <div className={`stars stars--${product.rating}`}>
+                        <div className="stars__star" onClick={() => handleClickStars(1, product.id)}></div>
+                        <div className="stars__star" onClick={() => handleClickStars(2, product.id)}></div>
+                        <div className="stars__star" onClick={() => handleClickStars(3, product.id)}></div>
+                        <div className="stars__star" onClick={() => handleClickStars(4, product.id)}></div>
+                        <div className="stars__star" onClick={() => handleClickStars(5, product.id)}></div>
                     </div>
                     <div className="review">
                         Rating: {rating}
@@ -48,12 +70,12 @@ export const Card = ({product}: CardProps) => {
                     <div className="price_value">{price}</div>
                 </div>
 
-                <a
-                    href="#page_buy"
+                <button
+                    onClick={handletoAdd}
                     className="card_buy"
                 >
                     Buy
-                </a>
+                </button>
         </div>
 
     )

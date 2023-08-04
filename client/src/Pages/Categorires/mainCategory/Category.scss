@@ -10,7 +10,6 @@
     min-height: fit-content;
     display: flex;
     margin: 25px auto;
-    justify-content: space-between;
     flex-wrap: wrap;
     border: 1px solid var(--main-grey);
     padding: 1.2rem;
@@ -25,11 +24,20 @@
     text-align: center;
     background-color: var(--optional-biege);
     color: var(--text);
-    // padding: 3rem;
     border: transparent;
-    opacity: 0.8;
+    opacity: 0.9;
     z-index: 2;
     transition: transform 0.5s ease;
+    position: relative;
+
+    h4 {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        font-size: 25px;
+        color: var(--main-white);
+        text-transform: uppercase;
+    }
 
     &__img {
         width: 100%;
