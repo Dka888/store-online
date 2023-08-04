@@ -7,4 +7,5 @@ export interface Product {
     price: number,
     rating: number,
     description: string,
+    id: string,
 }

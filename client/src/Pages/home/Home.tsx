@@ -1,15 +1,8 @@
-// import axios from "axios";
-// import { useState, useEffect } from "react";
-// import { Product } from "../../utils/Product";
-
-import { Product } from "../../utils/Product";
-
 import { SearchBar } from "../../component/searchingBar/SearchBar";
 import { Slider } from "../../component/slider/Slider";
 import './Home.scss';
 import { Card } from "../../component/Card/Card";
-import { Category } from "../../utils/Categoris";
-// import { Categories } from "../Categorires/mainCategory/Categories";
+import {products} from '../../api/api';
 
 export const Home = () => {
     // const [products, setProducts] = useState<Product[]>([])
@@ -36,14 +29,6 @@ export const Home = () => {
         {name:'clothes', urlImg: './images/clothes.jpg', id: 6}, 
         {name:'home', urlImg: './images/home-decor.jpg', id: 7}, 
         {name: 'health', urlImg: './images/health.jpg', id: 8}
-    ];
-
-    const products: Product[] = [
-        { name: 'Iphone 14', description: 'new technologu i etc.', price: 1400, imgUrl: 'https://images.pexels.com/photos/198192/pexels-photo-198192.jpeg', category: Category.Technology, rating: 4.8 },
-        { name: 'MacBook', description: 'jhseflwiaget;iea/hgrot', price: 1900, imgUrl: 'https://images.pexels.com/photos/198192/pexels-photo-198192.jpeg', rating: 4.7, category: Category.Technology },
-        { name: 'Iphone 14', description: 'new technologu i etc.', price: 1400, imgUrl: 'https://images.pexels.com/photos/198192/pexels-photo-198192.jpeg', category: Category.Food, rating: 4.8 },
-        { name: 'Iphone 14', description: 'new technologu i etc.', price: 1400, imgUrl: 'https://images.pexels.com/photos/198192/pexels-photo-198192.jpeg', category: Category.Sport, rating: 4.8 },
-        { name: 'Iphone 14', description: 'new technologu i etc.', price: 1400, imgUrl: 'https://images.pexels.com/photos/198192/pexels-photo-198192.jpeg', category: Category.Garden, rating: 4.8 },
     ];
 
 
