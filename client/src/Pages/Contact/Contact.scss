@@ -5,7 +5,8 @@
     height: fit-content;
     width: 30vw;
     margin: 3rem auto;
-    border: 1px solid #333;
+    border: 1px solid var(--main-grey);
+    border-radius: 0.3rem;
     display: flex;
     justify-content: space-around;
     padding: 1rem;
@@ -13,7 +14,8 @@
 
     &__title {
         text-align: center;
-        margin: 1.5rem auto;
+        margin: 3rem auto 1rem;
+        font-size: 3.5rem;
     }
 
     &__link {
@@ -39,12 +41,14 @@
     &__input {
         width: 100%;
         margin: 10px auto;
+        border-radius: 0.3rem;
     
     }
     
     &__textarea {
         width: 100%;
         margin: 10px auto;
+        border-radius: 0.3rem;
     }
     
     &__button {

@@ -36,6 +36,7 @@ export const Header = () => {
             <div className='header__autorization'>
                 <Link to='/login'><Button name="log in" action={handlechange} /></Link>
                 <Link to='/register'><Button name="sign up" action={handlechange} /></Link>
+                <Link to='user/basket'><Button name='basket' action={handlechange} /></Link>
             </div>
         </header>
     )

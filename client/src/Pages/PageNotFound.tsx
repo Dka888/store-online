@@ -1,1 +1,1 @@
-export const PageNotFound = () => <h1 style={{margin: '10vh auto', fontSize: '30px', textAlign: 'center', height: '50vh'}}>Page not found...</h1>
+export const PageNotFound = () => <h1 style={{margin: '10vh auto', fontSize: '3.5rem', textAlign: 'center', height: '50vh'}}>Page not found...</h1>

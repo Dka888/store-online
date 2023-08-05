@@ -10,7 +10,7 @@ const initialState: BasketState = {
 };
 
 export const addToBasket = createAsyncThunk('basket/addToBasket', async (product: Product) => {
-  return product;
+    return product;
 });
 
 export const removeFromBasket = createAsyncThunk('basket/removeFromBasket', async (productId: string) => {
@@ -28,7 +28,7 @@ const basketSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(addToBasket.fulfilled, (state, action) => {
-      state.items.push(action.payload)
+        state.items.push(action.payload)     
       })
       .addCase(removeFromBasket.fulfilled, (state, action) => {
         state.items = state.items.filter(item => item.id !== action.payload);

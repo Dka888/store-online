@@ -10,6 +10,8 @@ import { Contact } from './Pages/Contact/Contact';
 import { ProductList } from './Pages/ProductList/ProductList';
 import { Category } from './utils/Categoris';
 import { Basket } from './component/Basket/Basket';
+import { Login } from './component/autorization/Login';
+import { Register } from './component/autorization/Register';
 
 function App() {
  
@@ -32,6 +34,8 @@ function App() {
       <Route path='/about' element={<About />} />
       <Route path='*' element={<PageNotFound />} />
       <Route path='/contact' element={ <Contact />} />
+      <Route path='/login' element={<Login />} />
+      <Route path='/register' element={<Register />} />
     </Routes>
     <Footer />
     </>

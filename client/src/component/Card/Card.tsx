@@ -13,8 +13,8 @@ interface CardProps {
 }
 
 export const Card = ({product}: CardProps) => {
-    const {name, price, description, rating} = product;
-    const [counterClick, setCounterClick] = useState(0);
+    const {name, price, description } = product;
+    const [counterClick, setCounterClick] = useState(1);
     const [sumStars, setSumStars] = useState(0);
 
     const dispatch = useAppDispatch();
@@ -22,23 +22,37 @@ export const Card = ({product}: CardProps) => {
     const handleClickStars = (number: number, id: string) => {
         setCounterClick(counterClick + 1);
         setSumStars(sumStars + number);
-        const rating = Math.round(sumStars / counterClick);
+
+        countingRating();
+    }
+
+    function countingRating() {
+        const rating = Math.round(sumStars / counterClick) > 0 
+        ? Math.round(sumStars / counterClick)
+        : 1;
         const productCard = products.find(product => product.id);
 
         if (productCard) {
             productCard.rating = rating; 
             console.log(productCard.rating);
         }
-        // axios.patch(`http://localhost:3333/products/${id}`, {rating, })
+        // axios.patch(`http://localhost:3333/products/${id}`, 
+        // {method: 'PATCH',
+        // headers: {'Content-Type': 'application/json'},
+        // body: JSON.stringify({
+        // rating, })
     }
+     const items = useAppSelector(state => state.basket.items);
 
     const handletoAdd = () => {
+        if(items.find(item => item.id === product.id)) {
+            return;
+        }
         dispatch(addToBasket(product));
     }
 
-    const item = useAppSelector(state => state.basket.items);
+   
 
-    console.log(item);
 
     return (
         <div className="card">
@@ -61,7 +75,7 @@ export const Card = ({product}: CardProps) => {
                         <div className="stars__star" onClick={() => handleClickStars(5, product.id)}></div>
                     </div>
                     <div className="review">
-                        Rating: {rating}
+                        Rating: {product.rating}
                     </div>
                 </div>
 

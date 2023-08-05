@@ -37,7 +37,7 @@ export const Home = () => {
         <main>
             <SearchBar />
             <div className="container">
-                <h2 className="container__title" style={{ margin: 'auto' }}>Popular categories</h2>
+                <h2 className="container__title">Popular categories</h2>
                 <Slider categories={categories} />
                 <div className="carousel">
                     <h2>New Products</h2>
