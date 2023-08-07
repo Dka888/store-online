@@ -43,6 +43,7 @@ export const Contact = () => {
               <textarea
                 placeholder="Message"
                 className="form__textarea"
+                rows={4}
                 id="message"
                 required
               ></textarea>

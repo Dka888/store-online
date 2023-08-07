@@ -9,9 +9,10 @@ import { Footer } from './component/footer/Footer';
 import { Contact } from './Pages/Contact/Contact';
 import { ProductList } from './Pages/ProductList/ProductList';
 import { Category } from './utils/Categoris';
-import { Basket } from './component/Basket/Basket';
+import { Basket } from './Pages/Basket/Basket';
 import { Login } from './component/autorization/Login';
 import { Register } from './component/autorization/Register';
+import { CartItem } from './Pages/CartItem/CartItem';
 
 function App() {
  
@@ -36,6 +37,7 @@ function App() {
       <Route path='/contact' element={ <Contact />} />
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
+      <Route path='/cartInfo/:id' element={<CartItem />} />
     </Routes>
     <Footer />
     </>

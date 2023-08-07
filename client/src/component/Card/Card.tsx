@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Product } from '../../utils/Product';
-
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { products } from '../../api/api';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addToBasket } from '../../features/basketSlice';
 
-
 import './Card.scss';
+
+
 interface CardProps {
     product: Product;
 }
@@ -51,21 +52,21 @@ export const Card = ({product}: CardProps) => {
         dispatch(addToBasket(product));
     }
 
-   
-
 
     return (
+
         <div className="card">
+            <Link to={`/cartInfo/${product.id}`} className='card__link'>
             <img
-                src="images/imac.jpeg"
-                alt="Apple A1419 iMac 27 Retina 5K"
+                src={product.imgUrl}
+                alt={product.name}
                 className="card_apple"
             ></img>
 
                 <h2 className="card_descript">{name}</h2>
-                <p>{description}</p>
-                <div className="card_code">Product code: 195434</div>
-
+              
+                <div className="card_code">Product code: {product.id}</div>
+            </Link> 
                 <div className="card_rew">
                     <div className={`stars stars--${product.rating}`}>
                         <div className="stars__star" onClick={() => handleClickStars(1, product.id)}></div>
