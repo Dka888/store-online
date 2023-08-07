@@ -10,9 +10,9 @@ export const Basket = () => {
     const dispatch = useAppDispatch();
 
     const listOfItems = basketItems.map(product => {
-        const { id, name, imgUrl, price } = product;
+        const { _id, name, imgUrl, price } = product;
         const newProduct = {
-            id,
+            _id,
             name,
             imgUrl,
             price,
@@ -46,7 +46,7 @@ export const Basket = () => {
 
                 <section className="basket__product-list">
                     {listOfItems.map(product =>
-                        <React.Fragment key={product.id}>
+                        <React.Fragment key={product._id}>
                             <hr style={{ width: '70%', margin: 0 }}></hr>
                             <div className="basket__product">
                                 <img src={product.imgUrl} alt={product.name} />

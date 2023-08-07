@@ -2,7 +2,7 @@ import { Product } from '../../utils/Product';
 import { useParams } from 'react-router-dom';
 import './CartItem.scss';
 import { useEffect, useState } from 'react';
-import { products } from '../../api/api';
+
 import { Button } from '../../component/button/Button';
 import { addToBasket } from '../../features/basketSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -10,19 +10,19 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 export const CartItem = () => {
     const { id } = useParams<{ id: string }>();
     const [product, setProduct] = useState<Product>();
-
+    const products = useAppSelector(state => state.products.products);
+    
     useEffect(() => {
-        const takeProduct = products.find(product => product.id === id);
+        const takeProduct = products.find(product => product._id === id);
         if (takeProduct) {
             setProduct(takeProduct);
         }
-    }, [id]);
-
+    }, [id, products]);
     
     const dispatch = useAppDispatch();
     const items = useAppSelector(state => state.basket.items);
     const handletoAdd = () => {
-        if(items.find(item => item.id === product?.id)) {
+        if (items.find(item => item._id === product?._id)) {
             return;
         }
         if(product) dispatch(addToBasket(product));

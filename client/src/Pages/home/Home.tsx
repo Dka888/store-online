@@ -2,26 +2,29 @@ import { SearchBar } from "../../component/searchingBar/SearchBar";
 import { Slider } from "../../component/slider/Slider";
 import './Home.scss';
 import { Card } from "../../component/Card/Card";
-import {products} from '../../api/api';
+import { useEffect } from "react";
+import { Product } from "../../utils/Product";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { getProducts } from "../../features/productsSlice";
 
 export const Home = () => {
-    // const [products, setProducts] = useState<Product[]>([])
-    // useEffect(() => { getProducts() },[])
+    // const [products, setProducts] = useState<Product[]>()
 
-    // function getProducts () {
-    //     axios.get('http://localhost:3333/products')
-    // .then(res => setProducts(res.data));
-    // }
+    // useEffect(() => {
+    //     const loadingProducts = async () => {
+    //         const productsData = await dataProducts()
+    //         setProducts(productsData);
+    //     }
 
-    // const someProducts = products.slice(0, 5);
+    //     loadingProducts()
+    // }, [])
+    const dispatch = useAppDispatch();
+    const products = useAppSelector(state => state.products.products);
 
-    // const chippestProducts = [...products];
+    useEffect(() => {
+        dispatch(getProducts())
+    }, [dispatch])
 
-    // const discount = chippestProducts.sort((a, b) => a.price - b.price).slice(0, 5);
-
-    // const categories = products.map(product => product.category).filter((cat, i, arr) => arr.indexOf(cat) === i);
-
-    // console.log(categories);
     const categories = [
         {name: 'technology', urlImg: './images/technologies.jpg', id: 1}, 
         {name:'sport', urlImg: './images/sport (2).jpg', id: 4}, 
@@ -30,10 +33,11 @@ export const Home = () => {
         {name:'home', urlImg: './images/home-decor.jpg', id: 7}, 
         {name: 'health', urlImg: './images/health.jpg', id: 8}
     ];
-
-
+    let productsForCarousel: Product[] = [];
+    if (products) {
+        productsForCarousel = products.slice(products.length - 5);
+    }
     return (
-
         <main>
             <SearchBar />
             <div className="container">
@@ -42,9 +46,11 @@ export const Home = () => {
                 <div className="carousel">
                     <h2>New Products</h2>
                     <div className="carousel__view">
-                        {products.map(product =>
+                        {productsForCarousel.length
+                            ? productsForCarousel.map(product =>
                             <Card product={product} />
-                        )}
+                            )
+                            : <div>Loading...</div>}
                     </div>
                 </div>
             </div>

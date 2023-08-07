@@ -31,7 +31,7 @@ const basketSlice = createSlice({
         state.items.push(action.payload)     
       })
       .addCase(removeFromBasket.fulfilled, (state, action) => {
-        state.items = state.items.filter(item => item.id !== action.payload);
+        state.items = state.items.filter(item => item._id !== action.payload);
       })
       .addCase(removeAllFromBasket.fulfilled, (state) => {
         state.items = [];
@@ -39,4 +39,4 @@ const basketSlice = createSlice({
   },
 });
 
-export default basketSlice.reducer;
+export const { actions: basketActions, reducer: basketReducer } = basketSlice;

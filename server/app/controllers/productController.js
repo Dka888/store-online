@@ -1,6 +1,6 @@
 
 import Product from "../models/product.js";
-// import secretKey from '../middleware/authorization.js';
+import secretKey from '../middleware/authorization.js';
 
 export const addProduct = async(req, res) => {
   try {

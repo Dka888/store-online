@@ -7,6 +7,7 @@ const productSchema = new mongoose.Schema({
   price: { type: Number, required: true },
   rating: { type: Number, default: 0 },
   description: { type: String, required: true },
+  click: {type: Number, default: 0},
 });
 
 export default mongoose.model("Product", productSchema);
