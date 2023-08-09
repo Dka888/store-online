@@ -9,10 +9,12 @@ import { Loader } from "../../component/loader/Loader";
 import './Home.scss';
 import { Product } from "../../utils/Product";
 
+
 export const Home = () => {
     const [productsForCarousel, setCarousel] = useState<Product[]>([]);
     const dispatch = useAppDispatch();
     const products = useAppSelector(state => state.products.products);
+
 
     useEffect(() => {
         const loadingProducts = async () => {

@@ -13,12 +13,15 @@ import { Basket } from './Pages/Basket/Basket';
 import { Login } from './component/autorization/Login';
 import { Register } from './component/autorization/Register';
 import { CartItem } from './Pages/CartItem/CartItem';
+import {SearchingProducts} from './component/SearchingProducts/SearchingProducts';
+import { SearchContextProvider } from './utils/Context';
 
 function App() {
   return (
     <> 
     <Header/>
-    <Routes>
+      <SearchContextProvider>
+        <Routes>
       <Route path='/' element={<Home />} />
       <Route path='/home' element={<Navigate to={'/'} />} />
       <Route path='/categories' element={<Categories />} />
@@ -38,8 +41,10 @@ function App() {
       <Route path='/register' element={<Register />} />
       <Route path='/cartInfo/:id' element={<CartItem />} />
       <Route path='/products' element={ <Navigate to='/categories' />} />
-      <Route path='/products/:query' element={<ProductList category={null} />} />
+      <Route path='/products/:query' element={<SearchingProducts />} />
     </Routes>
+      </SearchContextProvider>
+
     <Footer />
     </>
   );

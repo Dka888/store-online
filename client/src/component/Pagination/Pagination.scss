@@ -19,11 +19,17 @@
         color: var(--main-grey);
         display: flex;
         justify-content: center;
-
-        &:hover {
-            background-color: var(--main-grey);
-            color: var(--main-white);
-            cursor: pointer;
-        }
     }
+}
+
+.active {
+    background-color: #606060;
+    color: var(--main-white);
+    cursor: not-allowed;
+}
+
+.not-active:hover {
+    cursor: pointer; 
+    background-color: var(--main-grey);
+    color: var(--main-white);
 }

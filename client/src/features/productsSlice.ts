@@ -17,7 +17,7 @@ const initialState: ProductState = {
 export const getProducts = createAsyncThunk('products/getProducts', async () => {
     const data = axios.get('http://localhost:3333/products');
     const prods = (await data).data as Product[];
-    return prods;
+    return prods || [];
 });
 
 export const editProduct = createAsyncThunk('products/editProduct', async (productItem: Product) => {

@@ -1,30 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './SearchBar.scss';
+import { useSearchContext } from '../../utils/Context';
 
+// interface SearchBarProps {
+//   search: string,
+//   setSearch: (search: string) => void,
+// }
 
+export const SearchBar = (
+// {search, setSearch}: SearchBarProps
+) => {
+  const {search, handleQuery} = useSearchContext();
+  // const hadleQuery = (word: string) => {
+  //   setSearch(word);
+  // }
 
-export const SearchBar = () => {
-  const [query, setQuery] = useState('');
-  
-  // const products = useAppSelector(state => state.products.products);
-    // const filteredProducts = useMemo(() => {
-    //   let newProducts = products;
-
-    //   const trimmedQuery = query.trim().toLowerCase();
-
-    //   if(query) {
-    //     newProducts = newProducts.filter(product => product.name.toLowerCase().includes(trimmedQuery))
-    //   }
-
-    //   return newProducts;
-    // }, [query]);
-
-    // console.log(filteredProducts);
 
     return (
     <form
       method="get"
-      action={`/products/${query.trim()}`}
+      action={`/products/${search.trim()}`}
       className='search-form'
     >
       <div className="search-div">
@@ -36,8 +31,8 @@ export const SearchBar = () => {
           type="text"
           className="search-input"
           placeholder="Write here what you are looking for..."
-          onChange={(e) => setQuery(e.target.value)}
-          value={query}
+          onChange={(e) => handleQuery(e.target.value)}
+          value={search}
         />
       </div>
     </form>
