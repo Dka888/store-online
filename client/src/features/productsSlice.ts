@@ -16,18 +16,15 @@ const initialState: ProductState = {
 
 export const getProducts = createAsyncThunk('products/getProducts', async () => {
     const data = axios.get('http://localhost:3333/products');
-    const prods: Product[] = (await data).data;
+    const prods = (await data).data as Product[];
     return prods;
 });
 
-export const editProduct = createAsyncThunk('product/editProduct', async (productItem: Product) => {
+export const editProduct = createAsyncThunk('products/editProduct', async (productItem: Product) => {
     const {_id, rating, click} = productItem;
-    // const prevData = await axios.get(`http://localhost:3333/products/${_id}`);
-    // const data = { ...prevData, rating}
     try {
        const response = await axios.patch(`http://localhost:3333/products/${_id}`, {rating, click});
        const productUpdated = await response.data;
-       console.log(productUpdated);
        return productUpdated;
     } catch(e) {
         console.log(e);
@@ -45,6 +42,7 @@ const productsSlice = createSlice({
             })
             .addCase(getProducts.fulfilled, (state, action) => {
                 state.products = action.payload;
+                state.loading = false;
             })
             .addCase(getProducts.rejected, (state) => {
                 state.loading = false;

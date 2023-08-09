@@ -1,42 +1,29 @@
 import { SearchBar } from "../../component/searchingBar/SearchBar";
 import { Slider } from "../../component/slider/Slider";
-import './Home.scss';
 import { Card } from "../../component/Card/Card";
-import { useEffect } from "react";
-import { Product } from "../../utils/Product";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { getProducts } from "../../features/productsSlice";
+import { getProducts } from '../../features/productsSlice';
+import {categories} from '../../utils/Categoris';
+import { Loader } from "../../component/loader/Loader";
+import './Home.scss';
+import { Product } from "../../utils/Product";
 
 export const Home = () => {
-    // const [products, setProducts] = useState<Product[]>()
-
-    // useEffect(() => {
-    //     const loadingProducts = async () => {
-    //         const productsData = await dataProducts()
-    //         setProducts(productsData);
-    //     }
-
-    //     loadingProducts()
-    // }, [])
+    const [productsForCarousel, setCarousel] = useState<Product[]>([]);
     const dispatch = useAppDispatch();
     const products = useAppSelector(state => state.products.products);
 
     useEffect(() => {
-        dispatch(getProducts())
-    }, [dispatch])
+        const loadingProducts = async () => {
+            await dispatch(getProducts());
+            if (products.length) {
+                setCarousel(products.slice(products.length - 5));
+            }
+        }
+        loadingProducts();
+    }, [dispatch, products]);
 
-    const categories = [
-        {name: 'technology', urlImg: './images/technologies.jpg', id: 1}, 
-        {name:'sport', urlImg: './images/sport (2).jpg', id: 4}, 
-        {name:'food', urlImg: './images/food.jpg', id: 5}, 
-        {name:'clothes', urlImg: './images/clothes.jpg', id: 6}, 
-        {name:'home', urlImg: './images/home-decor.jpg', id: 7}, 
-        {name: 'health', urlImg: './images/health.jpg', id: 8}
-    ];
-    let productsForCarousel: Product[] = [];
-    if (products) {
-        productsForCarousel = products.slice(products.length - 5);
-    }
     return (
         <main>
             <SearchBar />
@@ -48,9 +35,10 @@ export const Home = () => {
                     <div className="carousel__view">
                         {productsForCarousel.length
                             ? productsForCarousel.map(product =>
-                            <Card product={product} />
+                            <Card product={product} key={product._id}/>
                             )
-                            : <div>Loading...</div>}
+                            : <div><Loader /></div>
+                        }
                     </div>
                 </div>
             </div>

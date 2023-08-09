@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addToBasket } from '../../features/basketSlice';
 import { editProduct } from '../../features/productsSlice';
+
 import './Card.scss';
 
 interface CardProps {
@@ -16,7 +17,7 @@ export const Card = ({product}: CardProps) => {
     const handleClickStars = (number: number) => {
         let updatedProduct: Product;
         if(product.click > 0) {
-            const newRating = Math.round((product.rating * product.click + number) / (product.click + 1));
+            const newRating = Math.round((product.rating * product.click + number) / (product.click + 1) * 10) / 10;
             const newClick = product.click + 1;
             updatedProduct= {...product, click: newClick, rating: newRating}
         } else {
@@ -37,7 +38,7 @@ export const Card = ({product}: CardProps) => {
         dispatch(addToBasket(product));
     }
 
-    console.log(product.click);
+    const productCode = product._id.slice(10);
 
     return (
 
@@ -50,8 +51,8 @@ export const Card = ({product}: CardProps) => {
             ></img>
 
                 <h2 className="card_descript">{name}</h2>
-              
-                <div className="card_code">Product code: {product._id}</div>
+                
+                <div className="card_code">Product code: {productCode}</div>
             </Link> 
                 <div className="card_rew">
                     <div className={`stars stars--${Math.round(product.rating)}`}>

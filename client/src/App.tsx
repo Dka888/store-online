@@ -1,6 +1,6 @@
 import React from 'react';
 import { Home } from './Pages/home/Home';
-import { Routes, Route} from 'react-router-dom';
+import { Routes, Route, Navigate} from 'react-router-dom';
 import { PageNotFound } from './Pages/PageNotFound';
 import { Categories } from './Pages/Categorires/mainCategory/Categories';
 import { About } from './Pages/About/About';
@@ -15,13 +15,12 @@ import { Register } from './component/autorization/Register';
 import { CartItem } from './Pages/CartItem/CartItem';
 
 function App() {
- 
   return (
     <> 
     <Header/>
     <Routes>
       <Route path='/' element={<Home />} />
-      <Route path='/home' element={<Home />} />
+      <Route path='/home' element={<Navigate to={'/'} />} />
       <Route path='/categories' element={<Categories />} />
       <Route path='/categories/technology' element={<ProductList category={Category.Technology} />} />
       <Route path='/categories/clothes' element={<ProductList category={Category.Clothes} />} />
@@ -38,6 +37,8 @@ function App() {
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
       <Route path='/cartInfo/:id' element={<CartItem />} />
+      <Route path='/products' element={ <Navigate to='/categories' />} />
+      <Route path='/products/:query' element={<ProductList category={null} />} />
     </Routes>
     <Footer />
     </>
