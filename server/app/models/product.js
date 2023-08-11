@@ -8,7 +8,7 @@ const productSchema = new mongoose.Schema({
   rating: { type: Number, default: 0 },
   description: { type: String, required: true },
   click: {type: Number, default: 0},
-  // imgUrl: {type: string, required: true}
+  imgUrl: {type: String }
 });
 
 export default mongoose.model("Product", productSchema);

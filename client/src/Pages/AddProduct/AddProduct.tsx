@@ -1,0 +1,120 @@
+import React, { useState } from 'react';
+import { Category } from '../../utils/Categoris';
+import './addProduct.scss';
+import axios from 'axios';
+import { Product } from '../../utils/Product';
+
+type FormData = Omit<Product, '_id'>;
+
+export const AddProduct = () => {
+    const [formData, setFormData] = useState<FormData>({
+        imgUrl: '',
+        name: '',
+        category: Category.Clothes,
+        price: 0,
+        rating: 0,
+        description: '',
+        click: 0,
+    });
+
+    const [message, setMessage] = useState(false);
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = event.target;
+        setFormData(prevData => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const response = await axios.post('http://localhost:3333/products/add', formData); 
+        if (response.status === 201) {
+            setMessage(true);
+            setTimeout(() => setMessage(false), 3000);
+            reset();
+        }
+    }
+
+    function reset() {
+        setFormData(prevData => ({
+            ...prevData,
+            name: '',
+            description: '',
+            price: 0,
+            imgUrl: '',
+        }));
+    }
+
+    console.log(formData);
+    return (
+        <div className="addProductForm">
+            <h2 className="addProductForm__title">Add product</h2>
+            <form className="addProductForm__form" onSubmit={handleSubmit}>
+                <div className="addProductForm__form__field">
+                    <label className="addProductForm__form__field-label" htmlFor="name">Name of product:</label>
+                    <input
+                        className="addProductForm__form__field-input"
+                        type="text"
+                        id="name"
+                        name="name"
+                        required
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="addProductForm__form__field">
+                    <label className="addProductForm__form__field-label" htmlFor="desc">Description:</label>
+                    <textarea
+                        className="addProductForm__form__field-textarea"
+                        id="desc"
+                        name="description"
+                        rows={4}
+                        required
+                        onChange={handleChange}
+                    ></textarea>
+                </div>
+                <div className="addProductForm__form__field">
+                    <label className="addProductForm__form__field-label" htmlFor="price">Price:</label>
+                    <input
+                        className="addProductForm__form__field-input"
+                        type="number" step="0.01"
+                        id="price"
+                        name="price"
+                        required
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="addProductForm__form__field">
+                    <label className="addProductForm__form__field-label" htmlFor="category">Category:</label><br />
+                    <select id="category" name="category" value={formData.category} required onChange={handleChange}>
+                        <option value={Category.Technology}>{Category.Technology}</option>
+                        <option value={Category.Clothes}>{Category.Clothes}</option>
+                        <option value={Category.Food}>{Category.Food}</option>
+                        <option value={Category.Furniture}>{Category.Furniture}</option>
+                        <option value={Category.Garden}>{Category.Garden}</option>
+                        <option value={Category.Health}>{Category.Health}</option>
+                        <option value={Category.Home}>{Category.Home}</option>
+                        <option value={Category.Sport}>{Category.Sport}</option>
+                    </select>
+                </div>
+                <div className="addProductForm__form__field">
+                    <label className="addProductForm__form__field-label" htmlFor="imgUrl">URL image:</label>
+                    <input
+                        className="addProductForm__form__field-input"
+                        type="url"
+                        id="imgUrl"
+                        name="imgUrl"
+                        required
+                        onChange={handleChange}
+                    />
+                </div>
+                <button className="addProductForm__submit">Add Product</button>
+            </form>
+            {message && <div style={{ margin: '0 auto 2rem', color: 'green', fontSize: '1.5rem', textAlign: 'center' }}>Your successful add the product!</div>}
+        </div>
+    );
+};
+
+
+

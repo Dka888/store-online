@@ -4,8 +4,8 @@ import secretKey from '../middleware/authorization.js';
 
 export const addProduct = async(req, res) => {
   try {
-    const { name, category, price, rating, description } = req.body;
-    const product = new Product({ name, category, price, rating, description });
+    const { name, category, price, rating, description, imgUrl } = req.body;
+    const product = new Product({ name, category, price, rating, description, imgUrl });
     await product.save();
     res.status(201).json({ message: "Product added successfully!" });
   } catch (error) {

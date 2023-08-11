@@ -8,40 +8,70 @@ const {sign} = pkg;
 const secretKey = 'secret-key';
 
 export async function registerUser(req, res) {
+  const { email, password, username } = req.body;
+
   try {
-    const { username, password, email } = req.body;
-    const hashedPassword = await hash(password, 10);
-    const user = new User({ username, password: hashedPassword, email });
-    await user.save();
-    res.status(201).json({ message: "User registered successfully!" });
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      res.status(400).json({ message: 'User already exists' });
+    } else {
+      const newUser = new User({ email, password, username });
+      await newUser.save();
+      res.status(201).json({ message: 'Registration successful' });
+    }
   } catch (error) {
-    res.status(500).json({ error: "Error while registering user" });
+    res.status(500).json({ message: 'Error during registration' });
   }
+  // try {
+  //   const { username, password, email } = req.body;
+  //   const hashedPassword = await hash(password, 10);
+  //   const user = new User({ username, password: hashedPassword, email });
+  //   await user.save();
+  //   res.status(201).json({ message: "User registered successfully!" });
+  // } catch (error) {
+  //   res.status(500).json({ error: "Error while registering user" });
+  // }
 }
 
 export async function loginUser(req, res) {
+    const { username, email, password } = req.body;
+
   try {
-    const { username, password, email } = req.body;
-    const user = await findOne({ username });
-
-    if (!user && !email) {
-      return res.status(404).json({ message: "User not found" });
+    const user = await User.findOne({ username });
+    const isPasswordValid = await user.password === password.toString();
+    
+    if (user && isPasswordValid) {
+      res.status(200).json({ message: 'Login successful' });
+    } else {
+      res.status(401).json({ message: 'Invalid credentials' });
     }
-
-    const isPasswordValid = await compare(password, user.password);
-
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    const token = sign({ username: user.username }, secretKey, {
-      expiresIn: "1h",
-    });
-
-    res.status(200).json({ token });
   } catch (error) {
-    res.status(500).json({ error: "Error while logging in" });
+    res.status(500).json({ message: 'Error during login' });
   }
+ 
+  // try {
+  //   const { username, password, email } = req.body;
+  //   const user = await User.findOne({ username });
+
+  //   if (!user && !email) {
+  //     return res.status(404).json({ message: "User not found" });
+  //   }
+
+  //   const isPasswordValid = await compare(password, user.password);
+
+  //   if (!isPasswordValid) {
+  //     return res.status(401).json({ message: "Invalid" });
+  //   }
+
+  //   const token = sign({ username: user.username }, secretKey, {
+  //     expiresIn: "1h",
+  //   });
+
+  //   res.status(200).json({ token });
+  // } catch (error) {
+  //   console.error("Error during login:", error);
+  //   res.status(500).json({ error: "Error while logging in" });
+  // }
 }
 
 export const getAllUsers = async (req, res) => {

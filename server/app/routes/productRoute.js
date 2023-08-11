@@ -4,7 +4,7 @@ const router = Router();
 import * as productController from "../controllers/productController.js";
 import authMiddleware from "../middleware/authorization.js";
 
-router.post("/add", authMiddleware, productController.addProduct);
+router.post("/add", productController.addProduct);
 router.get("/", productController.getAllProducts);
 router.get("/:id", productController.getProductById);
 router.patch("/:id", productController.updateProduct);

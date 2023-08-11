@@ -3,12 +3,13 @@ import { Button } from '../button/Button';
 
 import {Link} from 'react-router-dom';
 import './header.scss';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { logout } from '../../features/loginSlice';
 
 export const Header = () => {
-    const handlechange = () => {
-        
-    }
-
+    const handlechange = () => { }
+    const isLoggedIn = useAppSelector(state => state.login.isLoggedIn);
+    const dispatch = useAppDispatch();
     return (
         <header className='header'>
             <div className='header__logo'><img src='/images/logo.jpg' alt='logo'></img></div>
@@ -34,9 +35,11 @@ export const Header = () => {
                 </ul>
             </div>
             <div className='header__autorization'>
-                <Link to='/login'><Button name="log in" action={handlechange} /></Link>
-                <Link to='/register'><Button name="sign up" action={handlechange} /></Link>
-                <Link to='user/basket'><Button name='basket' action={handlechange} /></Link>
+                {isLoggedIn
+                    ? (<><Link to='user/basket'><Button name='basket' action={handlechange} /></Link>
+                        <Button name="log out" action={() => dispatch(logout())}/></>)
+                    : (<><Link to='/login'><Button name="log in" action={handlechange} /></Link>
+                        <Link to='/register'><Button name="sign up" action={handlechange} /></Link></>)}
             </div>
         </header>
     )
