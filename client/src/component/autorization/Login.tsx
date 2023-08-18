@@ -9,9 +9,9 @@ export const Login = () => {
   const [username, setUserLogin] = useState('');
   const [password, setPassword] = useState('');
   const [showMessage, setShowMessage] = useState(false);
-
+  
+  const {isLoggedIn} = useAppSelector(state => state.login);
   const dispatch = useAppDispatch();
-  const { isLoggedIn } = useAppSelector(state => state.login)
 
   const handleLogin = async () => {
     try {
@@ -20,11 +20,14 @@ export const Login = () => {
         password
       });
       if (response.status === 200) {
-        dispatch(login());
+
         setUserLogin('');
         setPassword('');
         setShowMessage(true);
         setTimeout(() => setShowMessage(false), 3000);
+        dispatch(login());
+        const loggedUser = response.data.user;
+        localStorage.setItem('loggedInUser', JSON.stringify(loggedUser));
       } else {
         console.error('Login or password are wrong!');
         setShowMessage(true);

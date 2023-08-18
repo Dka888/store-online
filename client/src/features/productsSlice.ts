@@ -29,7 +29,17 @@ export const editProduct = createAsyncThunk('products/editProduct', async (produ
     } catch(e) {
         console.log(e);
     }
-})
+});
+
+export const addProduct = createAsyncThunk('product/addroduct', async(newProduct: Product) => {
+    try {
+        const response = await axios.post('http://localhost:3333/products/add', newProduct); 
+        const newData = response.data;
+        return newData;
+    } catch(e) {
+        console.log(e)
+    }
+});
 
 const productsSlice = createSlice({
     name: 'products',
@@ -48,6 +58,13 @@ const productsSlice = createSlice({
                 state.loading = false;
             })
             .addCase(editProduct.fulfilled, (state, {payload}) => {
+                state.products = payload;
+            })
+            .addCase(addProduct.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(addProduct.fulfilled, (state, {payload}) => {
+                state.loading = false;
                 state.products = payload;
             });
     },

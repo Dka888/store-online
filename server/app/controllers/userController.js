@@ -41,7 +41,7 @@ export async function loginUser(req, res) {
     const isPasswordValid = await user.password === password.toString();
     
     if (user && isPasswordValid) {
-      res.status(200).json({ message: 'Login successful' });
+      res.status(200).json({ message: 'Login successful', user});
     } else {
       res.status(401).json({ message: 'Invalid credentials' });
     }

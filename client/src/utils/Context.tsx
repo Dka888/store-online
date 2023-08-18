@@ -15,6 +15,9 @@ interface SearchContextInterface {
     rating: Rating,
     handleSortPrices: (event: React.ChangeEvent<HTMLSelectElement>) => void,
     handleSortRating: (event: React.ChangeEvent<HTMLSelectElement>) => void,
+    user: User | null,
+
+
 }
 export const SearchContext = createContext<SearchContextInterface>({
     search: '',
@@ -24,7 +27,9 @@ export const SearchContext = createContext<SearchContextInterface>({
     price: Price.Price,
     rating: Rating.Rating,
     handleSortPrices: () => {},
-    handleSortRating: () => {}
+    handleSortRating: () => { },
+    user: null,
+
 })
 
 export const SearchContextProvider = (
@@ -33,6 +38,7 @@ export const SearchContextProvider = (
     const [search, setSearch] = useState('');
     const [price, setPrice] = useState(Price.Price);
     const [rating, setRating] = useState(Rating.Rating);
+    const [user, setUser] = useState<User | null>(null);
     
     const dispatch = useAppDispatch();
     
@@ -54,6 +60,13 @@ export const SearchContextProvider = (
     },[dispatch]);
 
     const users = useAppSelector(state => state.users.users);
+
+    useEffect(() => {
+        const loggedInUserJSON = localStorage.getItem('loggedInUser');
+        const loggedInUser = loggedInUserJSON ? JSON.parse(loggedInUserJSON) : null;
+        setUser(loggedInUser);
+    }, [user]);
+
 
     const handleQuery = (query: string) => {
         setSearch(query)
@@ -92,6 +105,7 @@ export const SearchContextProvider = (
             price, 
             rating,
             handleSortPrices,
+            user,
             handleSortRating
         }}>{children}</SearchContext.Provider>
     )

@@ -1,0 +1,26 @@
+.user-account {
+    text-align: center;
+    margin-top: 50px;
+    min-height: 50vh;
+    padding: 3rem;
+    font-size: 1.5rem;
+
+    &__page {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    
+  }
+  
+  .user-info {
+    border: 1px solid #ccc;
+    padding: 20px;
+    min-width: 200px;
+    max-height: 200px;
+  }
+
+  .basket {
+    width: 100%;
+  }
+  

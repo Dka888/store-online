@@ -16,6 +16,7 @@ import { CartItem } from './Pages/CartItem/CartItem';
 import {SearchingProducts} from './component/SearchingProducts/SearchingProducts';
 import { SearchContextProvider } from './utils/Context';
 import { AddProduct } from './Pages/AddProduct/AddProduct';
+import { UserAccount } from './Pages/UserAccount/UserAccount';
 
 function App() {
   return (
@@ -43,7 +44,8 @@ function App() {
       <Route path='/cartInfo/:id' element={<CartItem />} />
       <Route path='/products' element={ <Navigate to='/categories' />} />
       <Route path='/products/:query' element={<SearchingProducts />} />
-      <Route path='user/addProduct' element={<AddProduct />} />
+      <Route path='/user/addProduct' element={<AddProduct />} />
+      <Route path='/user' element={<UserAccount />} />
     </Routes>
       </SearchContextProvider>
 

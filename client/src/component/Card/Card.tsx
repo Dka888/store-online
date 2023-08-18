@@ -30,11 +30,18 @@ export const Card = ({product}: CardProps) => {
     }
 
      const items = useAppSelector(state => state.basket.items);
-
+     const loggedInUserJSON = localStorage.getItem('loggedInUser');
+     const loggedInUser = loggedInUserJSON ? JSON.parse(loggedInUserJSON) : null;
+ 
     const handletoAdd = () => {
         if(items.find(item => item._id === product._id)) {
             return;
         }
+
+        if(!loggedInUser) {
+            return;
+        }
+
         dispatch(addToBasket(product));
     }
 

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Card } from '../../component/Card/Card';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { Category } from '../../utils/Categoris';
@@ -8,25 +8,23 @@ import { getProducts } from '../../features/productsSlice';
 import { SearchBar } from '../../component/searchingBar/SearchBar';
 import { Loader } from '../../component/loader/Loader';
 import { Product } from '../../utils/Product';
-import './ProductList.scss';
 import { usePaginationHook } from '../../utils/PaginationHook';
 import { useSearchContext } from '../../utils/Context';
 import { Sort } from '../../component/soringComponent/Sort';
 import { Price, Rating } from '../../utils/Sort';
-;
+import './ProductList.scss';
 
 interface ProductProps {
     category: Category | null;
 }
 
 export const ProductList = ({category}: ProductProps) => {
-    const [categoryProduct, setCategoryProduct] = useState<Product[]>([]);
+    const [listOfProducts, setListOfProduct] = useState<Product[]>([]);
     const { search, price, rating, handleSortPrices, handleSortRating } = useSearchContext();
     const { products, loading } = useAppSelector(state => state.products);
     const dispatch = useAppDispatch();
-    const { firstItem, lastItem, pages, currPage, setCurrPage } = usePaginationHook(categoryProduct.length);
-    // const [price, setPrice] = useState(Price.Price);
-    // const [rating, setRating] = useState(Rating.Rating);
+    const { firstItem, lastItem, pages, currPage, setCurrPage } = usePaginationHook(listOfProducts.length);
+    console.log(listOfProducts.length);
 
     useEffect(() => {
         const loadingData = async () => {
@@ -37,42 +35,44 @@ export const ProductList = ({category}: ProductProps) => {
             
                 if (category) {
                 newProduct = newProduct.filter(product => product.category === category);
+                setListOfProduct(newProduct);
                 }
-                if (search) {
-                    newProduct = newProduct.filter(product => product.name.toLowerCase().includes(search.toLowerCase()));
-                }
-
-                if (rating !== Rating.Rating) {
-                    switch (rating) {
-                        case Rating.RatingUp: newProduct = newProduct.sort((a, b) => a.rating - b.rating);
-                            break;
-                        case Rating.RatingDown: newProduct = newProduct.sort((a, b) => b.rating - a.rating);
-                            break;
-                        default: return newProduct;
-                    }
-                }
-
-                if(price !== Price.Price) {
-                    switch(price) {
-                        case Price.PriceUp: newProduct.sort((a, b) => a.price - b.price);
-                        break;
-                        case Price.PriceDown: newProduct.sort((a, b) => b.price - a.price);
-                        break;
-                        default: return newProduct;
-                    }
-                }
-
-                newProduct = newProduct.slice(firstItem, lastItem);
             }
-
-            setCategoryProduct(newProduct);
         }
-        
-        loadingData();
+            loadingData();
+    }, [dispatch, category]);
 
-    }, [category, dispatch, search, price, rating]);
+    const categoryProduct = useMemo(() => {
+        let newProduct = listOfProducts;
+        if (search) {
+            newProduct = newProduct.filter(product => product.name.toLowerCase().includes(search.toLowerCase()));
+        }
 
+        if (rating !== Rating.Rating) {
+            switch (rating) {
+                case Rating.RatingUp: newProduct = newProduct.sort((a, b) => a.rating - b.rating);
+                    break;
+                case Rating.RatingDown: newProduct = newProduct.sort((a, b) => b.rating - a.rating);
+                    break;
+                default: return newProduct;
+            }
+        }
 
+        if(price !== Price.Price) {
+            switch(price) {
+                case Price.PriceUp: newProduct.sort((a, b) => a.price - b.price);
+                break;
+                case Price.PriceDown: newProduct.sort((a, b) => b.price - a.price);
+                break;
+                default: return newProduct;
+            }
+        }
+
+        newProduct = newProduct.slice(firstItem, lastItem);
+        return newProduct;
+    }, [category, listOfProducts, search, price, rating, currPage, firstItem])
+
+    console.log(pages, currPage, firstItem, lastItem)
     return (
         <section className="productList">
             <SearchBar />
