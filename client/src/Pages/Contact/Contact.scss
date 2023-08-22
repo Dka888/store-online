@@ -11,6 +11,10 @@
     justify-content: space-around;
     padding: 1rem;
 
+    @media(max-width: 600px) {
+        width: 200px;
+        flex-direction: column;
+    }
 
     &__title {
         text-align: center;
@@ -37,6 +41,10 @@
     width: 20vw;
     text-align: center;
     padding-bottom: 4rem;
+
+    @media(max-width: 600px) {
+        width: 200px;
+    }
 
     &__input {
         width: 100%;

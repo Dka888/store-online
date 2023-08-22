@@ -12,17 +12,17 @@
     &__text {
         text-align: center;
         margin: auto auto 5rem;
-        
+
         p {
             justify-content: center;
             text-align: justify;
+            margin: 1rem auto;
         }
     }
 
     &__picture {
-        height: 25rem;
-        width: fit-content;
-        padding: 1rem;
+        height: auto;
+        padding: 0 1rem;
     }
 }
 

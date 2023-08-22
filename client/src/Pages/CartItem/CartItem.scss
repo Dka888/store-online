@@ -5,7 +5,7 @@
 
     &__title {
         margin: 3rem auto 1rem;
-        font-size: 3.5rem;
+        font-size: 3rem;
         text-align: center;
     }
 
@@ -15,7 +15,7 @@
 
         &-img {
             width: 50%;
-            height: fit-content;
+            max-height: 50vh;
         }
 
         &-title {

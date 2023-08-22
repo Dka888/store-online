@@ -19,8 +19,11 @@ interface UserState {
     type: string;
   }
   
+  const loggedInUserJSON = localStorage.getItem('loggedInUser');
+  const loggedInUser = loggedInUserJSON ? JSON.parse(loggedInUserJSON) : null;
+
   const initialState: UserState = {
-    isLoggedIn: false
+    isLoggedIn: !!loggedInUser
   };
   
   const loginReducer = (state: UserState = initialState, action: Action): UserState => {

@@ -6,7 +6,8 @@ export const enum Category {
    Food = 'Food',
    Clothes = 'Clothes',
    Home = 'Home',
-   Health = 'Health'
+   Health = 'Health',
+   All = 'All'
 }
 
 export const categories = [

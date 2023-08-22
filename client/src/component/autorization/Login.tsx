@@ -28,6 +28,7 @@ export const Login = () => {
         dispatch(login());
         const loggedUser = response.data.user;
         localStorage.setItem('loggedInUser', JSON.stringify(loggedUser));
+        setTimeout(() =>{window.location.href = '/user'}, 3000);
       } else {
         console.error('Login or password are wrong!');
         setShowMessage(true);

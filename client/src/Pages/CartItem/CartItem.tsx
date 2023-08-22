@@ -2,7 +2,6 @@ import { Product } from '../../utils/Product';
 import { useParams } from 'react-router-dom';
 import './CartItem.scss';
 import { useEffect, useState } from 'react';
-
 import { Button } from '../../component/button/Button';
 import { addToBasket } from '../../features/basketSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -33,7 +32,8 @@ export const CartItem = () => {
             <h2 className="cartItem__title">Product Info</h2>
             <div className='cartItem__container'>
                 <div className='cartItem__container-img'>
-                    <h4 className='cartItem__container-title'>{product?.name}</h4><img src={product?.imgUrl} alt={product?.name} />
+                    <h4 className='cartItem__container-title'>{product?.name}</h4>
+                    <img src={product?.imgUrl} alt={product?.name} />
                 </div>
                 <div className='cartItem__container-info'>
                     <p className='cartItem__container-info--text'><span>Product:</span> {product?.name}</p>
@@ -47,7 +47,6 @@ export const CartItem = () => {
                 <h5>Product description</h5>
                 <p>{product?.description}</p>
             </div>
-
         </div>
     )
 }

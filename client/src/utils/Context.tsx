@@ -16,7 +16,7 @@ interface SearchContextInterface {
     handleSortPrices: (event: React.ChangeEvent<HTMLSelectElement>) => void,
     handleSortRating: (event: React.ChangeEvent<HTMLSelectElement>) => void,
     user: User | null,
-
+    avatar: string,
 
 }
 export const SearchContext = createContext<SearchContextInterface>({
@@ -29,6 +29,7 @@ export const SearchContext = createContext<SearchContextInterface>({
     handleSortPrices: () => {},
     handleSortRating: () => { },
     user: null,
+    avatar: '',
 
 })
 
@@ -41,6 +42,13 @@ export const SearchContextProvider = (
     const [user, setUser] = useState<User | null>(null);
     
     const dispatch = useAppDispatch();
+    const [avatar, setAvatar] = useState('');
+
+    const avatars = ['./img/catgamer.jpg', './img/smokingMafia.jpg', './img/monster.jpg'];
+    
+    useEffect(() => {
+       setAvatar(avatars[Math.round(Math.random() * 2)]);
+    }, [avatar]);
     
     useEffect(() => {
         const loadingProducts = async () => {
@@ -65,7 +73,7 @@ export const SearchContextProvider = (
         const loggedInUserJSON = localStorage.getItem('loggedInUser');
         const loggedInUser = loggedInUserJSON ? JSON.parse(loggedInUserJSON) : null;
         setUser(loggedInUser);
-    }, [user]);
+    }, []);
 
 
     const handleQuery = (query: string) => {
@@ -106,7 +114,8 @@ export const SearchContextProvider = (
             rating,
             handleSortPrices,
             user,
-            handleSortRating
+            handleSortRating, 
+            avatar
         }}>{children}</SearchContext.Provider>
     )
 }

@@ -9,7 +9,6 @@ interface SortProps {
 }
 
 export const Sort = ({price, rating, handleSortPrices, handleSortRating}: SortProps) => {
-    
 
     return (
         <div className='sort'>

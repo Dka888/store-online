@@ -48,7 +48,6 @@ export const Contact = () => {
                 required
               ></textarea>
             </div>
-            {/* <button className="form__button" id="button">Send</button> */}
             <Button name='send' action={handleSendMsg} />
           </form>
 
