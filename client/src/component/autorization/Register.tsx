@@ -12,39 +12,59 @@ export const Register = () => {
 
     const dispatch = useAppDispatch();
 
-    const handleRegistration = async () => {
+    const handleRegistration = async (e: React.FormEvent<HTMLFormElement>) => {
         const newUser = { username, password, email };
-        const response = await axios.post('http://localhost:3333/users/register', newUser)
+        try {
+            const response = await axios.post('http://localhost:3333/users/register', newUser)
         if (response.status === 201) {
             setMessage(response.data.message);
             setTimeout(() => setMessage(null), 3000);
             dispatch(login());
             const loggedUser = response.data.user;
             localStorage.setItem('loggedInUser', JSON.stringify(loggedUser));
-
+                setTimeout(() => { window.location.href = '/user' }, 3000);
+            } else {
+                setMessage(response.data.message);
+            }
+        } catch (e) {
+            console.log(e);
         }
     };
 
     return (
         <>
-            <div className='register'>
-                <h2 className='register__title'>Registration</h2>
-                <div className='register__window'>
-                    <div>
-                        <label>Username: </label>
-                        <input type="text" value={username} onChange={(event) => setUsername(event.target.value)} />
+            <div className="register">
+                <form
+                    className='register__form'
+                    onSubmit={(e) => handleRegistration(e)}
+                >
+                    <h1 className="register__title">Registration</h1>
+                    <div className="register__input-box">
+                        <label>Username:
+                            <input
+                                type="text"
+                                value={username}
+                                placeholder='Username'
+                                onChange={(event) => setUsername(event.target.value)}
+                            /></label>
                     </div>
-                    <div>
-                        <label>Password: </label>
-                        <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
+
+                    <div className="register__input-box">
+                        <label>Password:
+                            <input
+                                type="password"
+                                value={password}
+                                placeholder='Password'
+                                autoComplete="off"
+                                onChange={(event) => setPassword(event.target.value)}
+                            /></label>
+                    </div >
+                    <div className="register__input-box">
+                        <label>Email:
+                            <input type="email" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} /> </label>
                     </div>
-                    <div>
-                        <label>Email: </label>
-                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                    </div>
-                     <button className='register__button' onClick={handleRegistration}>Register</button>
-                </div>
-               
+                    <button className='register__button' >Registration</button>
+                </form >
             </div>
             {message && <div style={{ margin: '0 auto 2rem', color: 'green', fontSize: '1.5rem', textAlign: 'center' }}>{message}</div>}
         </>

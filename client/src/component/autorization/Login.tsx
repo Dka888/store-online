@@ -13,7 +13,8 @@ export const Login = () => {
   const {isLoggedIn} = useAppSelector(state => state.login);
   const dispatch = useAppDispatch();
 
-  const handleLogin = async () => {
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     try {
       const response = await axios.post('http://localhost:3333/users/login', {
         username,
@@ -44,7 +45,7 @@ export const Login = () => {
     return (
       <>
         <div className="login">
-          <form className='login__form'>
+          <form className='login__form'    onSubmit={(event) => handleLogin(event)}>
             <h1 className="login__title">Login</h1>
             <div className="login__input-box">
               <input
@@ -63,6 +64,7 @@ export const Login = () => {
                 value={password}
                 required
                 onChange={(e) => setPassword(e.target.value)}
+                autoComplete="off"
               />
               <i className='login__bx bxs-lock-alt' ></i>
             </div>
@@ -72,12 +74,11 @@ export const Login = () => {
               </label>
             </div>
 
-            <div
+            <button
               className="login__btn"
-              onClick={handleLogin}
             >
               Login
-            </div>
+            </button>
           </form >
         </div>
         {isLoggedIn && showMessage && <div style={{ margin: '0 auto 2rem', color: 'green', fontSize: '1.5rem', textAlign: 'center' }}>Your successful log in!</div>}

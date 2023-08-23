@@ -101,6 +101,8 @@ export const UserAccount = () => {
                         </div>}
                     {isBasket && <Basket />}
                     {isAddProduct && <AddProduct />}
+                    {isChangeMail && <div>It is forbidden now!</div>}
+                    {isChangeUsername && <div>It is forbidden now!</div>}
                 </div>
                 </div>
         </section>
