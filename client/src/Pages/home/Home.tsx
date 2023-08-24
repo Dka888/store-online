@@ -10,19 +10,22 @@ import './Home.scss';
 import { Product } from "../../utils/Product";
 
 
+
 export const Home = () => {
     const [productsForCarousel, setCarousel] = useState<Product[]>([]);
     const dispatch = useAppDispatch();
     const products = useAppSelector(state => state.products.products);
+    
 
     useEffect(() => {
         const loadingProducts = async () => {
             await dispatch(getProducts());
             if (products.length) {
-                setCarousel(products.slice(products.length - 5));
-            }
+                setCarousel(products.slice(products.length - 5));  
+            }       
         }
         loadingProducts();
+        
     }, [dispatch, products]);
 
     return (

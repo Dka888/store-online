@@ -1,10 +1,11 @@
-import { Basket } from '../Basket/Basket';
+import { Baskets } from '../../component/Basket/Baskets';
 import './UserAccount.scss';
-import { useCallback, useEffect, useState } from 'react';
-import { AddProduct } from '../AddProduct/AddProduct';
+import { useCallback, useState } from 'react';
+import { AddProduct } from '../../component/AddProduct/AddProduct';
 import { logout } from '../../features/loginSlice';
 import { useAppDispatch } from '../../store/hooks';
 import { useSearchContext } from '../../utils/Context';
+import { UserHistory } from '../../component/UserHistory/UserHistory';
 
 
 export const UserAccount = () => {
@@ -12,12 +13,12 @@ export const UserAccount = () => {
     const loggedInUser = loggedInUserJSON ? JSON.parse(loggedInUserJSON) : null;
     const {avatar} = useSearchContext();
 
-    const [spinnerAnimationDuration, setSpinnerAnimationDuration] = useState(3);
+
     const [isBasket, setIsBasket] = useState(false);
     const [isAddProduct, setIsAddProduct] = useState(false);
     const [isChangeUsername, setIsChangeUsername] = useState(false);
     const [isChangeMail, setIsChangeMail] = useState(false);
-    const [elapsedSeconds, setElapsedSeconds] = useState(0);
+
 
     const reset = () => {
         setIsBasket(false);
@@ -55,21 +56,6 @@ export const UserAccount = () => {
         window.location.href = '/';
     }, [dispatch]);
 
-    const handleClickSpinner = useCallback(() => {
-        setElapsedSeconds(0);
-        const newDuration = spinnerAnimationDuration > 0 ? 0.1 : 0; 
-        setSpinnerAnimationDuration(newDuration); 
-    }, [spinnerAnimationDuration]);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setElapsedSeconds(prevSeconds => prevSeconds + 1);
-        }, 1000); 
-        return () => clearInterval(interval);
-    }, []);
-    
-    const animationDuration = Math.max(0.1, spinnerAnimationDuration + elapsedSeconds * 0.01);
-
     return (
         <section className='user-account'>
                 <h1>User Account</h1>
@@ -89,17 +75,8 @@ export const UserAccount = () => {
                     </div>
                 </div>
                 <div className='user__page'>
-                    {!isBasket && !isAddProduct && !isChangeMail && !isChangeUsername &&
-                        <div className='user__page-img'>
-                            <img
-                                src='./img/spinner.jpg'
-                                alt='spinner'
-                                className={`animate-spinner`}
-                                style={{ animationDuration: `${animationDuration < 3 ? animationDuration : 3}s` }}
-                                onClick={handleClickSpinner}
-                            ></img>
-                        </div>}
-                    {isBasket && <Basket />}
+                    {!isBasket && !isAddProduct && !isChangeMail && !isChangeUsername && <UserHistory user={loggedInUser} />}
+                    {isBasket && <Baskets />}
                     {isAddProduct && <AddProduct />}
                     {isChangeMail && <div>It is forbidden now!</div>}
                     {isChangeUsername && <div>It is forbidden now!</div>}

@@ -19,12 +19,9 @@ export const CartItem = () => {
     }, [id, products]);
     
     const dispatch = useAppDispatch();
-    const items = useAppSelector(state => state.basket.items);
+
     const handletoAdd = () => {
-        if (items.find(item => item._id === product?._id)) {
-            return;
-        }
-        if(product) dispatch(addToBasket(product));
+       if(product) dispatch(addToBasket(product));
     }
 
     return (

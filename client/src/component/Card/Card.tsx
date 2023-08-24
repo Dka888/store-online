@@ -23,7 +23,6 @@ export const Card = ({product}: CardProps) => {
         } else {
             const newClick = product.click + 1;
             updatedProduct = {...product, click: newClick, rating: number}
-            console.log(product.click, newClick)
         }
 
         dispatch(editProduct(updatedProduct));
@@ -34,10 +33,6 @@ export const Card = ({product}: CardProps) => {
      const loggedInUser = loggedInUserJSON ? JSON.parse(loggedInUserJSON) : null;
  
     const handletoAdd = () => {
-        if(items.find(item => item._id === product._id)) {
-            return;
-        }
-
         if(!loggedInUser) {
             return;
         }

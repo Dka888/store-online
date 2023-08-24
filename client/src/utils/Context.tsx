@@ -5,6 +5,7 @@ import { Product } from "./Product";
 import { User } from "./User";
 import { getUsers } from "../features/usersSlice";
 import { Price, Rating } from "./Sort";
+import { getBasket } from "../features/basketSlice";
 
 interface SearchContextInterface {
     search: string,
@@ -40,7 +41,7 @@ export const SearchContextProvider = (
     const [price, setPrice] = useState(Price.Price);
     const [rating, setRating] = useState(Rating.Rating);
     const [user, setUser] = useState<User | null>(null);
-    
+
     const dispatch = useAppDispatch();
     const [avatar, setAvatar] = useState('');
 
@@ -48,7 +49,7 @@ export const SearchContextProvider = (
     
     useEffect(() => {
        setAvatar(avatars[Math.round(Math.random() * 2)]);
-    }, [avatar]);
+    }, [avatar, user]);
     
     useEffect(() => {
         const loadingProducts = async () => {
@@ -75,6 +76,11 @@ export const SearchContextProvider = (
         setUser(loggedInUser);
     }, []);
 
+    useEffect(() => {
+        if(user !== null) {
+            dispatch(getBasket(user._id));
+        }
+    }, [dispatch, user])
 
     const handleQuery = (query: string) => {
         setSearch(query)
@@ -115,7 +121,7 @@ export const SearchContextProvider = (
             handleSortPrices,
             user,
             handleSortRating, 
-            avatar
+            avatar     
         }}>{children}</SearchContext.Provider>
     )
 }

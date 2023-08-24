@@ -9,13 +9,11 @@ import { Footer } from './component/footer/Footer';
 import { Contact } from './Pages/Contact/Contact';
 import { ProductList } from './Pages/ProductList/ProductList';
 import { Category } from './utils/Categoris';
-import { Basket } from './Pages/Basket/Basket';
 import { Login } from './component/autorization/Login';
 import { Register } from './component/autorization/Register';
 import { CartItem } from './Pages/CartItem/CartItem';
 import {SearchingProducts} from './component/SearchingProducts/SearchingProducts';
 import { SearchContextProvider } from './utils/Context';
-import { AddProduct } from './Pages/AddProduct/AddProduct';
 import { UserAccount } from './Pages/UserAccount/UserAccount';
 
 function App() {
@@ -35,7 +33,6 @@ function App() {
       <Route path='/categories/health' element={<ProductList category={Category.Health} />} />
       <Route path='/categories/sport' element={<ProductList category={Category.Sport} />} />
       <Route path='/categories/home' element={<ProductList category={Category.Home} />} />
-      <Route path='user/basket' element={<Basket />} />
       <Route path='/about' element={<About />} />
       <Route path='*' element={<PageNotFound />} />
       <Route path='/contact' element={ <Contact />} />
@@ -44,7 +41,6 @@ function App() {
       <Route path='/cartInfo/:id' element={<CartItem />} />
       <Route path='/products' element={ <Navigate to='/categories' />} />
       <Route path='/products/:query' element={<SearchingProducts />} />
-      <Route path='/user/addProduct' element={<AddProduct />} />
       <Route path='/user' element={<UserAccount />} />
     </Routes>
       </SearchContextProvider>

@@ -11,6 +11,6 @@ export const Button:FC<ButtonProps> = ({ name, action }) => {
     }
 
     return (
-        <button className="button" onClick={handleSubmit}>{name}  </button>
+        <button className="button" onClick={handleSubmit}>{name} </button>
     )
 }
