@@ -7,5 +7,6 @@ router.post("/add", basketController.addToBasket);
 router.get("/:userId", basketController.getFromBasket);
 router.patch("/one/:userId", basketController.updateOneItemFromBasket);
 router.patch("/all/:userId", basketController.updateAllItemFromBasket);
-router.patch("/quantity/:useeId", basketController.updateQuantities);
+router.patch("/quantity/:userId", basketController.updateQuantities);
+router.delete('/:_id', basketController.deleteItem)
 export default router;

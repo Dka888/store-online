@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { Product } from '../utils/Product';
-import { Basket, status } from '../utils/Basket';
+import { Basket } from '../utils/Basket';
 import axios from 'axios';
 import { ProductsInBasket } from '../component/Basket/Baskets';
 
@@ -53,19 +53,34 @@ export const removeFromBasket = createAsyncThunk('basket/removeFromBasket', asyn
   });
 
 export const removeAllFromBasket = createAsyncThunk('basket/removeAllFromBasket', async () => {
-    return [];
+   try {
+      const response = await axios.patch(`http://localhost:3333/basket/all/${_id}`);
+      return response.data;
+   } catch(e) {
+    throw e;
+   }
 });
 
-export const changeQuantities = createAsyncThunk('basket/changeQuantity', async (product: ProductsInBasket) => {
+export const deleteItem = createAsyncThunk('basket/delete', async (_id: string) => {
   try {
-    if (activeUser) {
+    const response = await axios.delete(`http://localhost:3333/basket/${_id}`);
+    return response.data;
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+})
+
+export const changeQuantities = createAsyncThunk('basket/changeQuantity', async (product: ProductsInBasket) => {
+   
+  try {
       const {quantity} = product;
-      const updatingBasket = { userId: _id, quantity, productId: product._id };
+      const updatingBasket = { userId: _id, quantity, _id: product._id };
+     
       const response = await axios.patch(`http://localhost:3333/basket/quantity/${_id}`, updatingBasket);
       const updatedBasket = response.data;
-      console.log(updatedBasket)
+     console.log(response)
       return updatedBasket
-    }
   } catch (e) {
     console.log(e);
     throw e;
@@ -82,20 +97,19 @@ const basketSlice = createSlice({
         state.items = action.payload
       })
       .addCase(addToBasket.fulfilled, (state, action) => {
-        state.items.push(action.payload)   
+        state.items = action.payload; 
       })
       .addCase(removeFromBasket.fulfilled, (state, action) => {
         state.items = action.payload;
-        state.items = state.items.filter(item => item.status === status.in_Cart);
       })
       .addCase(changeQuantities.fulfilled, (state, action) => {
-        const updatedItems = state.items.map(item =>
-          item.productId === action.payload.productId ? action.payload : item
-        );
-        state.items = updatedItems;
+        state.items = action.payload;
       })
-      .addCase(removeAllFromBasket.fulfilled, (state) => {
-        state.items = [];
+      .addCase(deleteItem.fulfilled, (state, action) => {
+        state.items = action.payload;
+      })
+      .addCase(removeAllFromBasket.fulfilled, (state, action) => {
+        state.items = action.payload;
       });
   },
 });

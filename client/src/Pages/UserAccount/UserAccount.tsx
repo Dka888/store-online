@@ -1,12 +1,13 @@
-import { Baskets } from '../../component/Basket/Baskets';
+import { Baskets, ProductsInBasket } from '../../component/Basket/Baskets';
 import './UserAccount.scss';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { AddProduct } from '../../component/AddProduct/AddProduct';
 import { logout } from '../../features/loginSlice';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useSearchContext } from '../../utils/Context';
 import { UserHistory } from '../../component/UserHistory/UserHistory';
-
+import { changeQuantities, deleteItem } from '../../features/basketSlice';
+import { status } from '../../utils/Basket';
 
 export const UserAccount = () => {
     const loggedInUserJSON = localStorage.getItem('loggedInUser');
@@ -56,6 +57,51 @@ export const UserAccount = () => {
         window.location.href = '/';
     }, [dispatch]);
 
+    //  const [listOfProduct, setListOfProduct] = useState<ProductsInBasket[]>([]);
+    //  const basketItems = useAppSelector((state) => state.basket.items); 
+ 
+    //  useEffect(() => {
+    //      if (basketItems.length) {
+    //          const filteredItems = basketItems.filter(item => item.status === status.in_Cart);
+    //          const listOfItems = filteredItems.map(item => {
+    //              const { productId, quantity, status } = item;
+    //              const fullProduct = { ...productId, quantity, status };
+                 
+    //              return fullProduct;
+    //          });
+ 
+    //          setListOfProduct(listOfItems);
+    //      }
+    //  }, [basketItems, dispatch]);
+
+    // const handleAddQuantity = (product: ProductsInBasket) => {
+    //     const { quantity } = product;
+    //     const newQuantity = quantity + 1;
+    //     const newProduct = { ...product, quantity: newQuantity }
+    //     dispatch(changeQuantities(newProduct));
+
+    //     const replace = listOfProduct.map(item => item._id === newProduct._id ? newProduct : item);
+    //     setListOfProduct(replace);
+    // }
+
+    // const handleMinusQuantity = (product: ProductsInBasket) => {
+      
+    //     const  { quantity } = product;
+    //     const newQuantity = quantity - 1;
+    //     const newProduct = { ...product, quantity: newQuantity }
+    //     if (newQuantity === 0) {
+    //         dispatch(deleteItem(product._id));
+    //         const replace = listOfProduct.filter(item => item._id !== newProduct._id);
+    //         setListOfProduct(replace);
+    //     } else {
+           
+    //         dispatch(changeQuantities(newProduct));
+            
+    //         const replace = listOfProduct.map(item => item._id === newProduct._id ? newProduct : item);
+    //         setListOfProduct(replace);
+    //     }
+    // }
+
     return (
         <section className='user-account'>
                 <h1>User Account</h1>
@@ -76,7 +122,9 @@ export const UserAccount = () => {
                 </div>
                 <div className='user__page'>
                     {!isBasket && !isAddProduct && !isChangeMail && !isChangeUsername && <UserHistory user={loggedInUser} />}
-                    {isBasket && <Baskets />}
+                    {isBasket && <Baskets 
+                    // listOfProduct={listOfProduct} handleAddQuantity={handleAddQuantity} handleMinusQuantity={handleMinusQuantity}
+                    />}
                     {isAddProduct && <AddProduct />}
                     {isChangeMail && <div>It is forbidden now!</div>}
                     {isChangeUsername && <div>It is forbidden now!</div>}

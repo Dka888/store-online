@@ -9,4 +9,5 @@ export interface Basket {
     productId: Product,
     quantity: number,
     status: status,
+    _id: string,
 }

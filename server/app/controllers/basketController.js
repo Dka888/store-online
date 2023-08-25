@@ -13,7 +13,7 @@ export const addToBasket = async(req, res) => {
         }
 
         let basketItem = await BasketItem.findOne({ userId, productId });
-        if (basketItem) {
+        if (basketItem && basketItem.status === 'in_Cart') {
           basketItem.quantity += 1;
           await basketItem.save();
         } else {
@@ -64,10 +64,24 @@ export const addToBasket = async(req, res) => {
 
     export const updateQuantities = async(req, res) => {
       try {
-        const {userId, productId, quantity} = req.params;
-        await BasketItem.updateOne({userId, productId, quantity})
+        const { quantity, _id} = req.body;
+        const {userId} = req.params;
+        await BasketItem.findOneAndUpdate({productId: _id, userId, status: "in_cart"}, { quantity});
+      
       } catch(error) {
         console.log(error);
         res.status(500).json({message: "Updated failed"})
+      }
+    }
+
+
+    export const deleteItem = async (req, res) => {
+      try {
+        const {_id} = req.params;
+        await BasketItem.findByIdAndDelete({_id});
+        res.status(200).json({message: 'Item is deleted'})
+      } catch(e) {
+        console.log(e);
+        res.status(500).json({message: 'Deleted failed'})
       }
     }
