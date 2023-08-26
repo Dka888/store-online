@@ -5,9 +5,13 @@ import { Product } from "./Product";
 import { User } from "./User";
 import { getUsers } from "../features/usersSlice";
 import { Price, Rating } from "./Sort";
-import { changeQuantities, deleteItem, getBasket } from "../features/basketSlice";
-import { ProductsInBasket } from "../component/Basket/Baskets";
+import { addToBasket, changeQuantities, deleteItem, getBasket } from "../features/basketSlice";
+import { ProductsInBasket } from "./Basket";
 import { status } from './Basket';
+
+interface historyProduct extends Product {
+    quantity: number,
+}
 
 interface SearchContextInterface {
     search: string,
@@ -23,6 +27,8 @@ interface SearchContextInterface {
     listOfProduct: ProductsInBasket[],
     handleAddQuantity: (product: ProductsInBasket) => void,
     handleMinusQuantity: (product: ProductsInBasket) => void,
+    handletoAdd: (product: Product) => void,
+    history: historyProduct[],
 }
 export const SearchContext = createContext<SearchContextInterface>({
     search: '',
@@ -37,7 +43,9 @@ export const SearchContext = createContext<SearchContextInterface>({
     avatar: '',
     listOfProduct: [],
     handleAddQuantity: () => { },
-    handleMinusQuantity: () => { }
+    handleMinusQuantity: () => { },
+    handletoAdd: () => { },
+    history: [],
 })
 
 export const SearchContextProvider = (
@@ -52,6 +60,8 @@ export const SearchContextProvider = (
     const [avatar, setAvatar] = useState('');
 
     const [listOfProduct, setListOfProduct] = useState<ProductsInBasket[]>([]);
+    const [history, setHistory] = useState<historyProduct[]>([]);
+
      const basketItems = useAppSelector((state) => state.basket.items); 
  
      useEffect(() => {
@@ -67,6 +77,20 @@ export const SearchContextProvider = (
              setListOfProduct(listOfItems);
          }
      }, [basketItems, dispatch]);
+
+     useEffect(() => {
+        if (basketItems.length) {
+            const filteredItems = basketItems.filter(item => item.status === status.purchased);
+            const listOfItems = filteredItems.map(item => {
+                const { productId, quantity } = item;
+                const fullProduct = { ...productId, quantity};
+                
+                return fullProduct;
+            });
+            setHistory(listOfItems);
+        }
+    }, [basketItems]);
+
      const handleAddQuantity = (product: ProductsInBasket) => {
         const { quantity } = product;
         const newQuantity = quantity + 1;
@@ -100,6 +124,7 @@ export const SearchContextProvider = (
     
     useEffect(() => {
        setAvatar(avatars[Math.round(Math.random() * 2)]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [avatar, user]);
     
     useEffect(() => {
@@ -121,11 +146,13 @@ export const SearchContextProvider = (
 
     const users = useAppSelector(state => state.users.users);
 
+  
+
     useEffect(() => {
         const loggedInUserJSON = localStorage.getItem('loggedInUser');
         const loggedInUser = loggedInUserJSON ? JSON.parse(loggedInUserJSON) : null;
         setUser(loggedInUser);
-    }, []);
+        }, []);
 
     useEffect(() => {
         if(user !== null) {
@@ -161,9 +188,28 @@ export const SearchContextProvider = (
         }
     }, []);
 
+    const handletoAdd = useCallback((product: Product) => {
+        const loggedInUserJSON = localStorage.getItem('loggedInUser');
+        const loggedInUser = loggedInUserJSON ? JSON.parse(loggedInUserJSON) : null;
+
+        if (!loggedInUser) {
+            return;
+        }
+        const newProductInBasket = {...product, quantity: 1, status: status.in_Cart};
+
+        const foundProductInCart = listOfProduct.find(item => item.name === newProductInBasket.name);
+        if(!foundProductInCart) {
+            setListOfProduct(prevState => [...prevState, newProductInBasket]); 
+        } 
+        dispatch(addToBasket(product));
+        
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dispatch])
+
     return (
         <SearchContext.Provider value={{
             search,
+            handletoAdd,
             handleQuery,
             products,
             users, 
@@ -175,7 +221,8 @@ export const SearchContextProvider = (
             avatar,
             listOfProduct,
             handleAddQuantity,
-            handleMinusQuantity
+            handleMinusQuantity,
+            history
         }}>{children}</SearchContext.Provider>
     )
 }

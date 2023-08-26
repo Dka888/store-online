@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { Product } from '../utils/Product';
 import { Basket } from '../utils/Basket';
 import axios from 'axios';
-import { ProductsInBasket } from '../component/Basket/Baskets';
+import { ProductsInBasket } from '../utils/Basket';
 
 interface BasketState {
   items: Basket[];
@@ -13,7 +13,6 @@ const { _id } = activeUser ? JSON.parse(activeUser) : '';
 const initialState: BasketState = {
   items: [],
 };
-
 
 export const getBasket = createAsyncThunk('basket/getBasket', async (id: string) => {
   try {

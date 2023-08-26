@@ -1,27 +1,37 @@
-import { useEffect, useState } from "react";
-import { User } from "../../utils/User"
-import axios from "axios";
-import { Basket } from "../../utils/Basket";
+import React from "react";
+import { useSearchContext } from "../../utils/Context"
 
-interface UserHistoryProps {
-    user: User
-}
+import './UserHistory.scss'
 
-export const UserHistory = ({user}: UserHistoryProps) => {
-    const [basket, setBasket] = useState<Basket[]>();
 
-    useEffect(() => {
-        const loadingBasket = async() => {
-            const basketItems = await axios.get(`http://localhost:3333/basket/${user._id}`);
-            // setBasket(basketItems);
-            console.log(basketItems);
-        }
-
-        loadingBasket()
-    }, [])
+export const UserHistory = () => {
+    const { history } = useSearchContext();
     return (
-        <div>
+        <div className="history">
+            <h2 className='history__title'>History</h2>
+            <div className='history__container'>
+                <section className="history__product-list">
+                    {!!history.length ?
+                        <table>
+                            <tr>
+                                <th>img</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                            </tr>
+                            {history.map(product =>
+                               <tr key={product._id}>
+                                <td className="history__img"><img src={`${product.imgUrl}`} alt={`${product.name}`}/></td>
+                                <td>{product.name}</td>    
+                                <td>{product.price}$</td>
+                                <td>{product.quantity}</td>
+                               </tr> )
+                            }
+                        </table>
+                        : <div style={{ margin: 'auto' }}>Your history is empty</div>}
 
+                </section>
+            </div>
         </div>
     )
 }

@@ -1,10 +1,9 @@
 import { Product } from '../../utils/Product';
 import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { addToBasket } from '../../features/basketSlice';
+import { useAppDispatch } from '../../store/hooks';
 import { editProduct } from '../../features/productsSlice';
-
 import './Card.scss';
+import { useSearchContext } from '../../utils/Context';
 
 interface CardProps {
     product: Product;
@@ -28,17 +27,7 @@ export const Card = ({product}: CardProps) => {
         dispatch(editProduct(updatedProduct));
     }
 
-     const items = useAppSelector(state => state.basket.items);
-     const loggedInUserJSON = localStorage.getItem('loggedInUser');
-     const loggedInUser = loggedInUserJSON ? JSON.parse(loggedInUserJSON) : null;
- 
-    const handletoAdd = () => {
-        if(!loggedInUser) {
-            return;
-        }
-
-        dispatch(addToBasket(product));
-    }
+    const { handletoAdd} = useSearchContext();
 
     const productCode = product._id.slice(10);
 
@@ -75,7 +64,7 @@ export const Card = ({product}: CardProps) => {
                 </div>
 
                 <button
-                    onClick={handletoAdd}
+                    onClick={() => handletoAdd(product)}
                     className="card_buy"
                 >
                     Buy
