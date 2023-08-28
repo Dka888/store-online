@@ -4,9 +4,11 @@
     min-height: 50vh;
     padding: 0 3rem;
     font-size: 1.5rem;
+
     &__page {
       display: flex;
       justify-content: space-between;
+
       @media(max-width: 600px) {
         flex-direction: column;
     }
@@ -47,6 +49,11 @@
         border-radius: 1rem;
         margin: 0.5rem 1rem;
         padding: 1px 0;
+
+        .active {
+          background-color: #333;
+          color: white;
+        }
         &:hover {
           cursor: pointer;
           background-color: #333;
@@ -56,7 +63,7 @@
     }
 
     &__page {
-      margin: auto;
+      margin: 0 auto;
       display: flex;
       justify-content: center;
 
@@ -66,8 +73,6 @@
       }
 
         @media(max-width: 600px) {
-          width: 150px;
-          height: 150px;
           margin: 3rem auto;
         }
       }

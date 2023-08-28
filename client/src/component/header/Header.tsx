@@ -10,9 +10,10 @@ export const Header = () => {
     const dispatch = useAppDispatch();
    
     const handleLogout = () => {
+        window.location.href = '/';
         dispatch(logout())
         localStorage.removeItem('loggedInUser');
-        window.location.href = '/';
+        
     }
 
     return (

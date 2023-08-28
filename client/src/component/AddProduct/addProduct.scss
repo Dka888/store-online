@@ -1,17 +1,19 @@
+@import '../../utils/utils.scss';
+
 .addProductForm {
     max-width: 500px;
     text-align: center;
-    margin: 15px auto;
+    margin: 0 auto;
     min-height: 50vh;
 
     &__title {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       font-size: 24px;
     }
   
     &__form {
       padding: 20px;
-      border: 1px solid #ccc;
+      border: 1px solid var(--main-grey);
       border-radius: 4px;
       background-color: white;
   
@@ -36,8 +38,8 @@
   
     &__submit {
       padding: 10px 20px;
-      background-color: #333;
-      border: 1px solid #333;
+      background-color: var(--main-grey);
+      border: 1px solid var(--main-grey);
       color: white;
       border-radius: 4px;
       cursor: pointer;
@@ -45,8 +47,7 @@
   
       &:hover {
         background-color: white;
-        color: #333;
-        // border: 1px solid #333;
+        color: var(--main-grey);
       }
     }
   }

@@ -6,6 +6,7 @@ import { logout } from '../../features/loginSlice';
 import { useAppDispatch } from '../../store/hooks';
 import { useSearchContext } from '../../utils/Context';
 import { UserHistory } from '../../component/UserHistory/UserHistory';
+import { Changes } from '../../component/Changes/Changes';
 
 
 export const UserAccount = () => {
@@ -14,7 +15,7 @@ export const UserAccount = () => {
     const {avatar} = useSearchContext();
 
 
-    const [isBasket, setIsBasket] = useState(false);
+    const [isBasket, setIsBasket] = useState(true);
     const [isAddProduct, setIsAddProduct] = useState(false);
     const [isChangeUsername, setIsChangeUsername] = useState(false);
     const [isChangeMail, setIsChangeMail] = useState(false);
@@ -58,9 +59,11 @@ export const UserAccount = () => {
 
     const handleLogout = useCallback(() => {
         reset();
-        dispatch(logout())
-        localStorage.removeItem('loggedInUser');
         window.location.href = '/';
+        setTimeout(() => {
+            dispatch(logout())
+            localStorage.removeItem('loggedInUser')}, 1);
+       
     }, [dispatch]);
 
     return (
@@ -73,11 +76,11 @@ export const UserAccount = () => {
                         <p className='user__data-personal'>{loggedInUser.username}</p>
                         <p className='user__data-personal'>{loggedInUser.email}</p>
                         <div className='user__options'>
-                            <p className='user__options-option' onClick={handleClickBasket}>Basket</p>
-                            <p className='user__options-option' onClick={handleClickHistory}>History</p>
-                            <p className='user__options-option' onClick={handleClickProduct}>Add product</p>
-                            <p className='user__options-option' onClick={handleClickUsername}>Change username</p>
-                            <p className='user__options-option' onClick={handleClickMail}>Change email</p>
+                            <p className={isBasket ? 'user__options-option active' : 'user__options-option '} onClick={handleClickBasket}>Basket</p>
+                            <p className={isHistory ? 'user__options-option active' : 'user__options-option '} onClick={handleClickHistory}>History</p>
+                            <p className={isAddProduct ? 'user__options-option active' : 'user__options-option '} onClick={handleClickProduct}>Add product</p>
+                            <p className={isChangeUsername ? 'user__options-option active' : 'user__options-option '} onClick={handleClickUsername}>Change username</p>
+                            <p className={isChangeMail ? 'user__options-option active' : 'user__options-option '} onClick={handleClickMail}>Change email</p>
                             <p className='user__options-option' onClick={handleLogout}>Log out</p>
                         </div>
                     </div>
@@ -86,8 +89,8 @@ export const UserAccount = () => {
                     {isHistory && <UserHistory />}
                     {isBasket && <Baskets />}
                     {isAddProduct && <AddProduct />}
-                    {isChangeMail && <div>It is forbidden now!</div>}
-                    {isChangeUsername && <div>It is forbidden now!</div>}
+                    {isChangeMail && <Changes page='mail' />}
+                    {isChangeUsername && <Changes page='username' />}
                 </div>
                 </div>
         </section>

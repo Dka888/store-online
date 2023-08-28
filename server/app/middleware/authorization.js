@@ -18,7 +18,7 @@ export default async(req, res, next) => {
   // });
   console.log(req)
   const username = req.user;
-  const isUser = await user.findOne({username})
+  const isUser = await User.findOne({username})
   if (!isUser) {
     return res.status(401).json({ message: "Invalid token" });
   }

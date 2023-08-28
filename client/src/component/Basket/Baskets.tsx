@@ -34,7 +34,7 @@ export const Baskets = () => {
                     {isProducts ?
                         listOfProduct.map(product =>
                             <React.Fragment key={product._id} >
-                                <hr style={{ width: '70%', margin: 0 }}></hr>
+                               
                                 <div className="basket__product">
                                     <img src={product.imgUrl} alt={product.name} />
                                     <div>
@@ -53,7 +53,7 @@ export const Baskets = () => {
                                        <div><Button name='-' action={() => handleMinusQuantity(product)} /></div>
                                     </div>
                                 </div>
-
+                                <hr style={{ width: '70%', margin: 0 }}></hr>
                             </React.Fragment>)
                         : <div style={{margin: 'auto'}}>Nothing in the basket!</div>}
 

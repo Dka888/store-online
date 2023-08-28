@@ -5,9 +5,9 @@ import * as userController from "../controllers/userController.js";
 
 router.post("/register", userController.registerUser);
 router.post("/login", userController.loginUser);
-router.get("/", userController.getAllUsers);
 router.get("/:id", userController.getUserById);
-router.put("/:id", userController.updateUser);
+router.patch("/username/:id", userController.updateUser);
+router.patch("/email/:id", userController.updateMail);
 router.delete("/:id", userController.deleteUser);
 
 export default router;

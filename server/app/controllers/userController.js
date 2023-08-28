@@ -74,15 +74,6 @@ export async function loginUser(req, res) {
   // }
 }
 
-export const getAllUsers = async (req, res) => {
-  try {
-    const users = await User.find({}, { password: 0 });
-    res.status(200).json(users);
-  } catch (error) {
-    res.status(500).json({ error: "Error while fetching users" });
-  }
-};
-
 export const getUserById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id, { password: 0 });
@@ -97,21 +88,43 @@ export const getUserById = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await User.findByIdAndUpdate(
-      req.params.id,
-      { username, password: hashedPassword },
-      { new: true }
-    );
+    const { NewUsername, password, OldUsername} = req.body;
+    // const hashedPassword = await bcrypt.hash(password, 10);
+    console.log(req.body)
+    const user = await User.findOne({username: OldUsername, password});
+    const isUnique = await User.findOne({username: NewUsername});
+    console.log(user)
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    res.status(200).json({ message: "User updated successfully!" });
+    if(isUnique) {
+      return res.status(401).json({message: 'Impossible username'})
+    }
+
+    user.username = NewUsername;
+    await user.save();
+    res.status(200).json({ message: "User updated successfully!", user });
   } catch (error) {
     res.status(500).json({ error: "Error while updating user" });
   }
 };
+
+export const updateMail = async (req, res) => {
+  try {
+    const { NewEmail, password, OldEmail} = req.body;
+    const user = await User.findOne({ email: OldEmail, password });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.email = NewEmail;
+    await user.save();
+    res.status(200).json({ message: "User updated successfully!", user });
+  } catch (error) {
+    res.status(500).json({ error: "Error while updating user" });
+  }
+}
 
 export const deleteUser = async (req, res) => {
   try {
