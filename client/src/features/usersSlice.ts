@@ -5,21 +5,21 @@ import { User } from '../utils/User';
 
 
 interface UsersState {
-    users: User[];
+    user: User | null;
     loading: boolean;
 }
 
 const initialState: UsersState = {
-    users: [],
+    user: null,
     loading: false,
 };
 
 
-export const getUsers = createAsyncThunk('users/getUsers', async () => {
-    const data = axios.get('http://localhost:3333/users');
-    const usersData = (await data).data as User[];
-    return usersData || [];
-});
+// export const getUser = createAsyncThunk('users/getUser', async (_id) => {
+//     const data = axios.get(`http://localhost:3333/users/${_id}`);
+//     const usersData = (await data).data as User;
+//     return usersData || null;
+// });
 
 export const createUser = createAsyncThunk('users/createUser', async (user: User) => {
     const response = await axios.post('http://localhost:3333/users/register', {...user});
@@ -27,12 +27,12 @@ export const createUser = createAsyncThunk('users/createUser', async (user: User
 })
 
 const usersSlice = createSlice({
-    name: 'users',
+    name: 'user',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getUsers.fulfilled, (state, action) => {
-            state.users = action.payload;
+        builder.addCase(createUser.fulfilled, (state, action) => {
+            state.user = action.payload;
             state.loading = false;
         })
     }

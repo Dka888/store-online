@@ -43,12 +43,14 @@
       border: 1px solid #ccc;
       margin: 1rem;
       border-radius: 10px;
+      padding-left: 0;
 
       &-option {
         border: 1px solid #333;
         border-radius: 1rem;
         margin: 0.5rem 1rem;
         padding: 1px 0;
+        list-style-type: none;
 
         .active {
           background-color: #333;

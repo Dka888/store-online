@@ -3,7 +3,6 @@ import { getProducts } from "../features/productsSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { Product } from "./Product";
 import { User } from "./User";
-import { getUsers } from "../features/usersSlice";
 import { Price, Rating } from "./Sort";
 import { addToBasket, changeQuantities, deleteItem, getBasket } from "../features/basketSlice";
 import { ProductsInBasket } from "./Basket";
@@ -17,7 +16,6 @@ interface SearchContextInterface {
     search: string,
     handleQuery: (search: string) => void,
     products: Product[],
-    users: User[],
     price: Price,
     rating: Rating,
     handleSortPrices: (event: React.ChangeEvent<HTMLSelectElement>) => void,
@@ -34,7 +32,6 @@ export const SearchContext = createContext<SearchContextInterface>({
     search: '',
     handleQuery: () => { },
     products: [],
-    users: [],
     price: Price.Price,
     rating: Rating.Rating,
     handleSortPrices: () => {},
@@ -136,17 +133,13 @@ export const SearchContextProvider = (
 
     const products = useAppSelector(state => state.products.products);
 
-    useEffect(() => {
-        const loadingUsers = async() => {
-            await dispatch(getUsers());
-        }
-        loadingUsers();
-
-    },[dispatch]);
-
-    const users = useAppSelector(state => state.users.users);
-
-  
+    // useEffect(() => {
+    //     const loadingUsers = async() => {
+    //         await dispatch(getUser());
+    //     }
+    //     loadingUsers();
+        
+    // },[dispatch]);
 
     useEffect(() => {
         const loggedInUserJSON = localStorage.getItem('loggedInUser');
@@ -212,7 +205,6 @@ export const SearchContextProvider = (
             handletoAdd,
             handleQuery,
             products,
-            users, 
             price, 
             rating,
             handleSortPrices,

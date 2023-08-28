@@ -1,6 +1,5 @@
 
 import Product from "../models/product.js";
-import secretKey from '../middleware/authorization.js';
 
 export const addProduct = async(req, res) => {
   try {
@@ -71,9 +70,9 @@ export const addManyProducts = async (req, res) => {
 
     const result = await Product.insertMany(products);
 
-    res.status(201).json({ message: "Produkty zostały dodane", result });
+    res.status(201).json({ message: "Products are added", result });
   } catch (error) {
-    res.status(500).json({ error: "Wystąpił błąd podczas dodawania produktów" });
+    res.status(500).json({ error: "Error" });
   }
 };
 

@@ -69,10 +69,10 @@ export const Login = () => {
               <i className='login__bx bxs-lock-alt' ></i>
             </div>
 
-            <div className="login__remember-forgot">
+            {/* <div className="login__remember-forgot">
               <label><input type="checkbox" /> Remember me
               </label>
-            </div>
+            </div> */}
 
             <button
               className="login__btn"
