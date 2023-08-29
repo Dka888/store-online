@@ -27,21 +27,18 @@ export const Changes = ({page}: ChangeProps) => {
             }
            try { 
             const response = await axios.patch(`http://localhost:3333/users/username/${user?._id}`, changesInUser);
-            if(response.statusText === 'OK') {
-                localStorage.clear();
-                const changedUser = response.data.user;
-                
-                localStorage.setItem('loggedInUser', JSON.stringify(changedUser));
-                setTimeout(() => window.location.href = '/user', 1000);
-                setStatus(response.statusText);
-                console.log(response.data)
-            } 
-            }catch(e) {
+                if(response.statusText === 'OK') {
+                    localStorage.clear();
+                    const changedUser = response.data.user;
+                    
+                    localStorage.setItem('loggedInUser', JSON.stringify(changedUser));
+                    setTimeout(() => window.location.href = '/user', 1000);
+                    setStatus(response.statusText);
+                } 
+            } catch(e) {
                 console.log(e);
                 setStatus('error');
-            }
-          
-           
+            } 
         } else {
             const changesInUser = {
                 OldEmail,
@@ -51,7 +48,6 @@ export const Changes = ({page}: ChangeProps) => {
             try{
                 const response = await axios.patch(`http://localhost:3333/users/email/${user?._id}`, changesInUser);
                 localStorage.clear();
-                console.log(response);
                 const changedUser = response.data.user;
                 localStorage.setItem('loggedInUser', JSON.stringify(changedUser));        
                 window.location.href = '/user';  

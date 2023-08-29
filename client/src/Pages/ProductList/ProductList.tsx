@@ -24,7 +24,6 @@ export const ProductList = ({category}: ProductProps) => {
     const { products, loading } = useAppSelector(state => state.products);
     const dispatch = useAppDispatch();
     const { firstItem, lastItem, pages, currPage, setCurrPage } = usePaginationHook(listOfProducts.length);
-    console.log(listOfProducts.length);
 
     useEffect(() => {
         const loadingData = async () => {
@@ -72,7 +71,6 @@ export const ProductList = ({category}: ProductProps) => {
         return newProduct;
     }, [category, listOfProducts, search, price, rating, currPage, firstItem])
 
-    console.log(pages, currPage, firstItem, lastItem)
     return (
         <section className="productList">
             <SearchBar />

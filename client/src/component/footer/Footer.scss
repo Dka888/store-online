@@ -17,14 +17,20 @@
       margin: 15px;
       color:var(--optional-biege);
 
-      @media (max-width: 500px) {
+      &:last-child {
+        margin-left: 3rem;
+      }
+
+      @media (max-width: 600px) {
         flex: 1 1 auto;
         text-align: center;
+        margin: auto;
       }
 
       & ul {
         list-style: none;
         padding: 0;
+        margin-left: 1rem;
       }
       
       & li {
@@ -33,7 +39,7 @@
       
       & a {
         text-decoration: none;
-        color: antiquewhite;
+        color: white;
 
         &:hover {
           text-decoration: underline;

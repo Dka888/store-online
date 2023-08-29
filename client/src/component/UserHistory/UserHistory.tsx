@@ -20,12 +20,16 @@ export const UserHistory = () => {
                             </tr>
                             {history.map(product =>
                                <tr key={product._id}>
-                                <td className="history__img"><img src={`${product.imgUrl}`} alt={`${product.name}`}/></td>
+                                <td className="history__img">
+                                    <img 
+                                    src={`${product.imgUrl}`} 
+                                    alt={`${product.name}`}
+                                    />
+                                </td>
                                 <td>{product.name}</td>    
                                 <td>{product.price}$</td>
                                 <td>{product.quantity}</td>
-                               </tr> )
-                            }
+                               </tr> )}
                         </table>
                         : <div style={{ margin: 'auto' }}>Your history is empty</div>}
 

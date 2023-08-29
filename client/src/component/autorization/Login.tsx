@@ -31,12 +31,11 @@ export const Login = () => {
         localStorage.setItem('loggedInUser', JSON.stringify(loggedUser));
         setTimeout(() =>{window.location.href = '/user'}, 3000);
       } else {
-        console.error('Login or password are wrong!');
         setShowMessage(true);
         setTimeout(() => setShowMessage(false), 3000);
       }
     } catch (error) {
-      console.error('Error', error);
+      console.error('Error: ', error);
       setShowMessage(true);
       setTimeout(() => setShowMessage(false), 3000);
     }
@@ -45,12 +44,15 @@ export const Login = () => {
     return (
       <>
         <div className="login">
-          <form className='login__form'    onSubmit={(event) => handleLogin(event)}>
+          <form
+            className='login__form'
+            onSubmit={(event) => handleLogin(event)}
+          >
             <h1 className="login__title">Login</h1>
             <div className="login__input-box">
               <input
                 type="text"
-                placeholder="Username"
+                placeholder="Username or Email"
                 value={username}
                 onChange={(e) => setUserLogin(e.target.value)}
                 required />

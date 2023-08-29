@@ -13,9 +13,16 @@ export const Slider: FC<SliderProps> = ({ categories }) => {
                 <div className="slider">
                     {categories.map(category =>
                     <div key={category.id}>
-                        <Link to={`categories/${category.name}`}><img src={category.urlImg} alt={category.name} /></Link>
+                        <Link to={`categories/${category.name}`}>
+                            <img src={category.urlImg} alt={category.name} />
+                        </Link>
                         <div className='slider-info'>
-                            <p className='slider-name'><span style={{textTransform: 'uppercase'}}>{category.name.slice(0, 1)}</span>{category.name.slice(1)}</p>
+                            <p className='slider-name'>
+                                <span style={{textTransform: 'uppercase'}}>
+                                    {category.name.slice(0, 1)}
+                                </span>
+                                {category.name.slice(1)}
+                            </p>
                         </div>
                     </div>)}
                 </div>

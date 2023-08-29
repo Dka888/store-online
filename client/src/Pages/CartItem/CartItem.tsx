@@ -37,7 +37,9 @@ export const CartItem = () => {
                     <p className='cartItem__container-info--text'><span>Category:</span> {product?.category}</p>
                     <p className='cartItem__container-info--text'><span>Price:</span> {product?.price}</p>
                     <p className='cartItem__container-info--text'><span>Rating: </span>{product?.rating}</p>
-                    <div style={{textAlign:'center', marginTop: '5rem'}}><Button action={handletoAdd} name="Add to Basket" /></div>
+                    <div style={{textAlign:'center', marginTop: '5rem'}}>
+                        <Button action={handletoAdd} name="Add to Basket" />
+                    </div>
                 </div>
             </div>
             <div className='cartItem__desc'>

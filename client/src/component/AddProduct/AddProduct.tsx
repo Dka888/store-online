@@ -10,7 +10,7 @@ export const AddProduct = () => {
     const [formData, setFormData] = useState<FormData>({
         imgUrl: '',
         name: '',
-        category: Category.Clothes,
+        category: Category.Technology,
         price: 0,
         rating: 0,
         description: '',
@@ -32,12 +32,19 @@ export const AddProduct = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setWait(true);
-        const response = await axios.post('http://localhost:3333/products/add', formData); 
-        if (response.status === 201) {
-            setMessage(true);
-            setWait(false);
-            setTimeout(() => setMessage(false), 3000);
-            reset();
+        try {
+            const response = await axios.post('http://localhost:3333/products/add', formData); 
+        
+            if (response.status === 201) {
+                setMessage(true);
+                setTimeout(() => setMessage(false), 3000);
+                reset();
+                setWait(false);
+            } else {
+                console.log(response);
+            }
+        } catch (e) {
+            console.log(e);
         }
     }
 
@@ -49,12 +56,11 @@ export const AddProduct = () => {
             price: 0,
             imgUrl: '',
         }));
+
     }
 
-    console.log(formData);
     return (
         <div className="addProductForm">
-            <h2 className="addProductForm__title">Add product</h2>
             <div 
                 className={wait ? 'show' : 'hidden'} 
                 style={{ margin: '0 auto', color: 'darkgreen', fontSize: '1.2rem', textAlign: 'center' }}

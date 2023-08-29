@@ -2,19 +2,8 @@ import React from 'react';
 import './SearchBar.scss';
 import { useSearchContext } from '../../utils/Context';
 
-// interface SearchBarProps {
-//   search: string,
-//   setSearch: (search: string) => void,
-// }
-
-export const SearchBar = (
-// {search, setSearch}: SearchBarProps
-) => {
+export const SearchBar = () => {
   const {search, handleQuery} = useSearchContext();
-  // const hadleQuery = (word: string) => {
-  //   setSearch(word);
-  // }
-
 
     return (
     <form

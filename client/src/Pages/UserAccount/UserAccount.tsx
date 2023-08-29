@@ -3,20 +3,15 @@ import './UserAccount.scss';
 import { useCallback, useState } from 'react';
 import { AddProduct } from '../../component/AddProduct/AddProduct';
 import { logout } from '../../features/loginSlice';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch} from '../../store/hooks';
 import { useSearchContext } from '../../utils/Context';
 import { UserHistory } from '../../component/UserHistory/UserHistory';
 import { Changes } from '../../component/Changes/Changes';
 
 
 export const UserAccount = () => {
-    const loggedInUserJSON = localStorage.getItem('loggedInUser');
-    const loggedInUser = loggedInUserJSON ? JSON.parse(loggedInUserJSON) : null;
     const {avatar} = useSearchContext();
-
-    const {user} = useAppSelector(state => state.users)
-    console.log(loggedInUser, user);
-
+    const {user} = useSearchContext();
 
     const [isBasket, setIsBasket] = useState(true);
     const [isAddProduct, setIsAddProduct] = useState(false);
@@ -76,8 +71,8 @@ export const UserAccount = () => {
                 <div className='user'>
                     <div className='user__data'>
                         <div className='user__data-avatar'><img src={avatar} alt='logo'></img></div>
-                        <p className='user__data-personal'>{loggedInUser.username}</p>
-                        <p className='user__data-personal'>{loggedInUser.email}</p>
+                        <p className='user__data-personal'>{user?.username}</p>
+                        <p className='user__data-personal'>{user?.email}</p>
                         <ul className='user__options'>
                             <li className={isBasket ? 'user__options-option active' : 'user__options-option '} onClick={handleClickBasket}>Basket</li>
                             <li className={isHistory ? 'user__options-option active' : 'user__options-option '} onClick={handleClickHistory}>History</li>

@@ -6,12 +6,14 @@ import { ProductsInBasket } from '../utils/Basket';
 
 interface BasketState {
   items: Basket[];
+  isLoadingBasket: boolean;
 }
 const activeUser = localStorage.getItem('loggedInUser');
 const { _id } = activeUser ? JSON.parse(activeUser) : '';
 
 const initialState: BasketState = {
   items: [],
+  isLoadingBasket: false,
 };
 
 export const getBasket = createAsyncThunk('basket/getBasket', async (id: string) => {
@@ -94,21 +96,35 @@ const basketSlice = createSlice({
     builder
       .addCase(getBasket.fulfilled, (state, action) => {
         state.items = action.payload
+        state.isLoadingBasket = false;
+      })
+      .addCase(getBasket.pending, (state, action) => {
+  
+        state.isLoadingBasket = true;
       })
       .addCase(addToBasket.fulfilled, (state, action) => {
         state.items = action.payload; 
+        state.isLoadingBasket = false;
       })
       .addCase(removeFromBasket.fulfilled, (state, action) => {
         state.items = action.payload;
+           state.isLoadingBasket = false;
+      })
+      .addCase(removeFromBasket.pending, (state) => {
+        
+           state.isLoadingBasket = true;
       })
       .addCase(changeQuantities.fulfilled, (state, action) => {
         state.items = action.payload;
+        state.isLoadingBasket = false;
       })
       .addCase(deleteItem.fulfilled, (state, action) => {
         state.items = action.payload;
+           state.isLoadingBasket = false;
       })
       .addCase(removeAllFromBasket.fulfilled, (state, action) => {
         state.items = action.payload;
+        state.isLoadingBasket = false;
       });
   },
 });

@@ -13,7 +13,6 @@ export const Header = () => {
         window.location.href = '/';
         dispatch(logout())
         localStorage.removeItem('loggedInUser');
-        
     }
 
     return (

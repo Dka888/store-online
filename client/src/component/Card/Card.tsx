@@ -16,8 +16,9 @@ export const Card = ({product}: CardProps) => {
     const handleClickStars = (number: number) => {
         let updatedProduct: Product;
         if(product.click > 0) {
-            const newRating = Math.round((product.rating * product.click + number) / (product.click + 1) * 10) / 10;
             const newClick = product.click + 1;
+            const newRating = Math.round((product.rating * product.click + number) / (newClick) * 10) / 10;
+            
             updatedProduct= {...product, click: newClick, rating: newRating}
         } else {
             const newClick = product.click + 1;

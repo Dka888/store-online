@@ -43,7 +43,7 @@ export const updateProduct = async (req, res) => {
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
-    res.status(200).json({ message: "Product updated successfully!" });
+    res.status(200).json({ message: "Product updated successfully!", product });
   } catch (error) {
     res.status(500).json({ error: "Error while updating product" });
   }
@@ -67,9 +67,7 @@ export const addManyProducts = async (req, res) => {
   const products = req.body;
 
   try {
-
     const result = await Product.insertMany(products);
-
     res.status(201).json({ message: "Products are added", result });
   } catch (error) {
     res.status(500).json({ error: "Error" });

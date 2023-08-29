@@ -13,8 +13,7 @@ export const Contact = () => {
             <form
             className="form"
             id="form"
-            action="action"
-            method="post"
+            action=""
           >
             <div className="form__item">
               <label htmlFor="name" className="form__label"></label>

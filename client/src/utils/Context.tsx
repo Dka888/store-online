@@ -117,12 +117,12 @@ export const SearchContextProvider = (
         }
     }
 
-    const avatars = ['./img/catgamer.jpg', './img/smokingMafia.jpg', './img/monster.jpg'];
+    const avatars = ['./img/catgamer.jpg', './img/smokingMafia.jpg', './img/frogg.jpg', './img/chess.jpg', './img/nerd.jpg', './img/monster.jpg'];
     
     useEffect(() => {
-       setAvatar(avatars[Math.round(Math.random() * 2)]);
+       setAvatar(avatars[Math.round(Math.random() * (avatars.length - 1))]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [avatar, user]);
+    }, []);
     
     useEffect(() => {
         const loadingProducts = async () => {
@@ -197,7 +197,7 @@ export const SearchContextProvider = (
         dispatch(addToBasket(product));
         
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dispatch])
+    }, [dispatch]);
 
     return (
         <SearchContext.Provider value={{
@@ -214,7 +214,7 @@ export const SearchContextProvider = (
             listOfProduct,
             handleAddQuantity,
             handleMinusQuantity,
-            history
+            history,
         }}>{children}</SearchContext.Provider>
     )
 }

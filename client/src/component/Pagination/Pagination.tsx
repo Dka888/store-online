@@ -21,7 +21,12 @@ export const Pagination = ({pages, currPage, setCurrPage}: PaginationProps) => {
     return  (
         <div className="pagination">
             <ul className="pagination__container">
-               {countPages(pages).map((page: number) => <li key={page} className={currPage === page ? 'pagination__page active' : 'pagination__page not-active'} onClick={() => setCurrPage(page)}>{page}</li>)}
+                {countPages(pages).map((page: number) =>
+                    <li
+                        key={page}
+                        className={currPage === page ? 'pagination__page active' : 'pagination__page not-active'}
+                        onClick={() => setCurrPage(page)}>{page}
+                    </li>)}
             </ul>
         </div>
     )
