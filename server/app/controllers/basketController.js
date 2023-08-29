@@ -77,8 +77,8 @@ export const addToBasket = async(req, res) => {
 
     export const deleteItem = async (req, res) => {
       try {
-        const {_id} = req.params;
-        await BasketItem.findByIdAndDelete({_id});
+        const {id} = req.params;
+        await BasketItem.findByIdAndDelete({_id: id});
         res.status(200).json({message: 'Item is deleted'})
       } catch(e) {
         console.log(e);
