@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 import * as basketController from '../controllers/basketController.js';
-// import authMiddleware from "../middleware/authorization.js";
+
 
 router.post("/add", basketController.addToBasket);
 router.get("/:userId", basketController.getFromBasket);
