@@ -13,7 +13,7 @@ export const Baskets = () => {
     const dispatch = useAppDispatch();
     const { isLoadingBasket } = useAppSelector(state => state.basket);
 
-    const {handleAddQuantity, handleMinusQuantity, listOfProduct} = useSearchContext()
+    const {handleAddQuantity, handleMinusQuantity, listOfProduct} = useSearchContext();
     let suma = 0;
 
     if (listOfProduct.length) {

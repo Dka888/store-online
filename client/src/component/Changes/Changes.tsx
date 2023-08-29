@@ -19,14 +19,14 @@ export const Changes = ({page}: ChangeProps) => {
 
     const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if(page === 'username') {
+        if (page === 'username' && user) {
             const changesInUser = {
                 OldUsername,
                 NewUsername,
                 password
             }
            try { 
-            const response = await axios.patch(`http://localhost:3333/users/username/${user?._id}`, changesInUser);
+               const response = await axios.patch(`http://localhost:3333/users/username/${user._id}`, changesInUser);
                 if(response.statusText === 'OK') {
                     localStorage.clear();
                     const changedUser = response.data.user;
@@ -39,14 +39,16 @@ export const Changes = ({page}: ChangeProps) => {
                 console.log(e);
                 setStatus('error');
             } 
-        } else {
+        }
+
+        if (user && page === 'mail') {
             const changesInUser = {
                 OldEmail,
                 NewEmail,
                 password
             }
             try{
-                const response = await axios.patch(`http://localhost:3333/users/email/${user?._id}`, changesInUser);
+                const response = await axios.patch(`http://localhost:3333/users/email/${user._id}`, changesInUser);
                 localStorage.clear();
                 const changedUser = response.data.user;
                 localStorage.setItem('loggedInUser', JSON.stringify(changedUser));        

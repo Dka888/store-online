@@ -45,7 +45,7 @@ export async function loginUser(req, res) {
   } catch (error) {
     res.status(500).json({ message: 'Error during login' });
   }
-}
+};
 
 export const getUserById = async (req, res) => {
   try {
@@ -102,7 +102,7 @@ export const updateMail = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Error while updating user" });
   }
-}
+};
 
 export const deleteUser = async (req, res) => {
   try {

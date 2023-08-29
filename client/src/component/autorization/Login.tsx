@@ -35,7 +35,7 @@ export const Login = () => {
         setTimeout(() => setShowMessage(false), 3000);
       }
     } catch (error) {
-      console.error('Error: ', error);
+      console.error(error);
       setShowMessage(true);
       setTimeout(() => setShowMessage(false), 3000);
     }
@@ -70,11 +70,6 @@ export const Login = () => {
               />
               <i className='login__bx bxs-lock-alt' ></i>
             </div>
-
-            {/* <div className="login__remember-forgot">
-              <label><input type="checkbox" /> Remember me
-              </label>
-            </div> */}
 
             <button
               className="login__btn"
