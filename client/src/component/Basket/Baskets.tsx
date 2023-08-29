@@ -11,7 +11,7 @@ import { Loader } from '../loader/Loader';
 export const Baskets = () => {
 
     const dispatch = useAppDispatch();
-    const { isLoadingBasket, items } = useAppSelector(state => state.basket);
+    const { isLoadingBasket } = useAppSelector(state => state.basket);
 
     const {handleAddQuantity, handleMinusQuantity, listOfProduct} = useSearchContext()
     let suma = 0;

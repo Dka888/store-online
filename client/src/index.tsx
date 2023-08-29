@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import './normalize.scss';
 import {Provider} from 'react-redux';
 import {store} from './store/store';
-import './index.scss';
+import './style.scss';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
