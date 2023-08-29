@@ -12,7 +12,7 @@ router.post("/login", userController.loginUser);
 router.get("/:id", userController.getUserById);
 router.patch("/username/:id", userController.updateUser);
 router.patch("/email/:id", userController.updateMail);
-router.delete("/:id", userController.deleteUser);
+router.delete("delete/:id", userController.deleteUser);
 
 export default router;
 
