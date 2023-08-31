@@ -1,5 +1,5 @@
 import { v4 } from 'uuid';
-const app = require('express')();
+import app from '../index.js';
 
 app.get('/api', (req, res) => {
   const path = `/api/item/${v4()}`;
