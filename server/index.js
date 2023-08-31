@@ -5,9 +5,12 @@ import userRoute from './app/routes/userRoute.js';
 import productRoute from './app/routes/productRoute.js';
 import basketRoute from './app/routes/basketRoute.js';
 import cors from 'cors';
+import 'dotenv/config.js';
 
 const app = express();
-const port = 3333;
+const port = process.env.PORT || 3333;
+const db = process.env.MONGODB_URI;
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/users', userRoute);
@@ -15,7 +18,7 @@ app.use('/products', productRoute);
 app.use('/basket', basketRoute);
 
 
-mongoose.connect('mongodb+srv://dymitrkosow:fullStack4444@cluster0.zkbb11w.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect(db)
   .then(() => {
     console.log('Connected to MongoDB');
   })
