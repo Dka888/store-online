@@ -8,7 +8,7 @@ import cors from 'cors';
 import 'dotenv/config.js';
 
 const app = express();
-const port = process.env.PORT || 3333;
+const port = process.env.PORT;
 const db = process.env.MONGODB_URI;
 
 app.use(cors());
