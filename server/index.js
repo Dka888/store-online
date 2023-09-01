@@ -13,13 +13,12 @@ const db = process.env.MONGODB_URI;
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use('/', (req, res) => {
-  res.send('Server is running');
-})
 app.use('/users', userRoute);
 app.use('/products', productRoute);
 app.use('/basket', basketRoute);
-
+app.use('/', (req, res) => {
+  res.send('Server is running');
+})
 
 mongoose.connect(db)
   .then(() => {
