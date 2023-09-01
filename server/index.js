@@ -6,6 +6,7 @@ import productRoute from './app/routes/productRoute.js';
 import basketRoute from './app/routes/basketRoute.js';
 import cors from 'cors';
 import 'dotenv/config.js';
+import Product from "../models/product.js";
 
 const app = express();
 const port = process.env.PORT;
@@ -16,8 +17,14 @@ app.use(bodyParser.json());
 app.use('/users', userRoute);
 app.use('/products', productRoute);
 app.use('/basket', basketRoute);
-app.use('/', (req, res) => {
-  res.send('Server is running');
+app.use('/', async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.status(200).json(products);
+    res.send(products);
+  } catch (error) {
+    res.status(500).json({ error: "Error while fetching products" });
+  }
 })
 
 mongoose.connect(db)

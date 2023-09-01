@@ -12,7 +12,7 @@
         "dest": "/"
       },
       {
-        "src": "/products",
+        "src": "/products/(.*)",
         "dest": "/products"
       }
     ]
