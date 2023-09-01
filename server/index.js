@@ -6,7 +6,7 @@ import productRoute from './app/routes/productRoute.js';
 import basketRoute from './app/routes/basketRoute.js';
 import cors from 'cors';
 import 'dotenv/config.js';
-import Product from "../models/product.js";
+import {v4} from 'uuid';
 
 const app = express();
 const port = process.env.PORT;
@@ -17,15 +17,16 @@ app.use(bodyParser.json());
 app.use('/users', userRoute);
 app.use('/products', productRoute);
 app.use('/basket', basketRoute);
-app.use('/', async (req, res) => {
-  try {
-    const products = await Product.find();
-    res.status(200).json(products);
-    res.send(products);
-  } catch (error) {
-    res.status(500).json({ error: "Error while fetching products" });
-  }
-})
+app.get('/', (req, res) => {
+  const path = `/item/${v4()}`;
+  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+  res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
+});
+
+app.get('/item/:slug', (req, res) => {
+  const { slug } = req.params;
+  res.end(`Item: ${slug}`);
+});
 
 mongoose.connect(db)
   .then(() => {
