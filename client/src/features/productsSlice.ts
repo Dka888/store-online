@@ -15,7 +15,7 @@ const initialState: ProductState = {
 
 
 export const getProducts = createAsyncThunk('products/getProducts', async () => {
-    const data = axios.get('https://store-online-self.vercel.app/products');
+    const data = axios.get('http://localhost:3333/products');
     const prods = (await data).data as Product[];
     return prods || [];
 });
