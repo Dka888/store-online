@@ -15,25 +15,25 @@ app.use('/products', productRoute);
 app.use('/basket', basketRoute);
 
 
-// mongoose.connect('mongodb+srv://dymitrkosow:fullStack4444@cluster0.zkbb11w.mongodb.net/?retryWrites=true&w=majority')
-//   .then(() => {
-//     console.log('Connected to MongoDB');
-//   })
-//   .catch((err) => {
-//     console.error('Error connecting to MongoDB:', err);
-//   });
+mongoose.connect(proccess.env.MONGODB_URI)
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((err) => {
+    console.error('Error connecting to MongoDB:', err);
+  });
 
-// const start = async() => {
-//   try {
-//     app.listen(port, () => {
-//       console.log(`Server running on http://localhost:${port}`);
-//     });
-//   } catch(e) {
-//     console.log('Error', e)
-//   }
-// };
+const start = async() => {
+  try {
+    app.listen(port, () => {
+      console.log(`Server running on http://localhost:${port}`);
+    });
+  } catch(e) {
+    console.log('Error', e)
+  }
+};
 
-// start();
+start();
 
 export default app;
 
